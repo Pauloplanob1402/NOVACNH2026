@@ -2,190 +2,170 @@
 
 import { useState, useEffect } from 'react';
 import { BrainCircuit, Brain, Heart, Turtle, Award, RotateCw } from 'lucide-react';
-import type { Alternative, Question, QuizData } from '@/lib/types';
-import quizData from '@/lib/questoes_shift.json';
+// Importamos o seu JSON diretamente aqui
+import quizData from '@/data/questoes_shift.json';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 
+// Componente de Ícone baseado no tipo de cérebro
 const BrainIcon = ({ type, className }: { type: string; className?: string }) => {
   switch (type) {
-    case 'Reptiliano':
-      return <Turtle className={className} />;
-    case 'Límbico':
-      return <Heart className={className} />;
-    case 'Neocórtex':
-      return <Brain className={className} />;
-    default:
-      return <BrainCircuit className={className} />;
+    case 'A': return <Turtle className={className} />; // Reptiliano
+    case 'B': return <Heart className={className} />;  // Límbico
+    case 'C': return <Brain className={className} />;  // Neocórtex
+    default: return <BrainCircuit className={className} />;
   }
 };
 
 export default function Quiz() {
-  const allQuestions: Question[] = (quizData as QuizData).niveis.flatMap(level => level.questoes);
+  // Achata todos os níveis em uma única lista de 100 questões
+  const allQuestions = quizData.niveis.flatMap(level => level.questoes);
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [xp, setXp] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<Alternative | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
 
+  // Carregar progresso do LocalStorage
   useEffect(() => {
-    const savedIndex = localStorage.getItem('brainshift-quiz-index');
-    const savedXp = localStorage.getItem('brainshift-quiz-xp');
-    if (savedIndex) {
-      const parsedIndex = parseInt(savedIndex, 10);
-      if (parsedIndex < allQuestions.length) {
-        setCurrentQuestionIndex(parsedIndex);
-      } else {
-        // If saved index is out of bounds (e.g. quiz finished), set to finished state
-        setCurrentQuestionIndex(allQuestions.length);
-      }
-    }
-    if (savedXp) {
-      setXp(parseInt(savedXp, 10));
-    }
+    const savedIndex = localStorage.getItem('reset-quiz-index');
+    const savedXp = localStorage.getItem('reset-quiz-xp');
+    if (savedIndex) setCurrentQuestionIndex(Math.min(parseInt(savedIndex), allQuestions.length));
+    if (savedXp) setXp(parseInt(savedXp));
     setIsLoaded(true);
-  }, [allQuestions.length]);
+  }, []);
 
+  // Salvar progresso
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem('brainshift-quiz-index', currentQuestionIndex.toString());
+      localStorage.setItem('reset-quiz-index', currentQuestionIndex.toString());
+      localStorage.setItem('reset-quiz-xp', xp.toString());
     }
-  }, [currentQuestionIndex, isLoaded]);
+  }, [currentQuestionIndex, xp, isLoaded]);
 
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem('brainshift-quiz-xp', xp.toString());
-    }
-  }, [xp, isLoaded]);
-
-  const playSound = (type: 'correct' | 'incorrect') => {
-    try {
-      const audio = new Audio(`/sounds/${type}.mp3`);
-      audio.play().catch(error => {
-        console.warn(`Could not play sound: ${type}.mp3`, error);
-      });
-    } catch (error) {
-      console.warn('Audio playback is not supported or failed.', error);
-    }
+  const tocarSom = (tipo: 'A' | 'B' | 'C' | 'nivel') => {
+    const caminhos: Record<string, string> = {
+      'A': '/sounds/click.mp3',
+      'B': '/sounds/click.mp3',
+      'C': '/sounds/brain-power.mp3',
+      'nivel': '/sounds/level-up.mp3'
+    };
+    const audio = new Audio(caminhos[tipo]);
+    audio.play().catch(e => console.log('Áudio aguardando interação ou não encontrado'));
   };
 
-  const handleAnswerSelect = (answer: Alternative) => {
+  const handleAnswerSelect = (key: string) => {
     if (selectedAnswer) return;
 
-    setSelectedAnswer(answer);
-    setXp(prevXp => prevXp + answer.pontos);
-    playSound('correct');
+    setSelectedAnswer(key);
+    
+    // Lógica de pontos: A=0, B=5, C=10
+    const points = key === 'C' ? 10 : key === 'B' ? 5 : 0;
+    setXp(prev => prev + points);
+
+    // Tocar sons baseados na escolha
+    tocarSom(key as 'A' | 'B' | 'C');
+
     setShowFeedback(true);
 
     setTimeout(() => {
       setShowFeedback(false);
       setSelectedAnswer(null);
-      setCurrentQuestionIndex(prevIndex => prevIndex + 1);
-    }, 2500);
+      setCurrentQuestionIndex(prev => prev + 1);
+      // Se mudar de nível (a cada 20 questões aproximadamente), toca som de level-up
+      if ((currentQuestionIndex + 1) % 20 === 0) {
+        tocarSom('nivel');
+      }
+    }, 2000);
   };
 
   const handleRestart = () => {
-    setCurrentQuestionIndex(0);
-    setXp(0);
-    setSelectedAnswer(null);
-    setShowFeedback(false);
+    localStorage.clear();
+    window.location.reload();
   };
 
-  if (!isLoaded) {
-    return (
-      <Card className="w-full max-w-2xl p-8">
-        <div className="flex flex-col items-center gap-4">
-          <BrainCircuit className="h-12 w-12 animate-pulse text-primary" />
-          <p className="text-muted-foreground">Carregando o quiz...</p>
-        </div>
-      </Card>
-    );
-  }
+  if (!isLoaded) return <div className="text-white text-center p-10">Carregando Missão...</div>;
 
   const isQuizFinished = currentQuestionIndex >= allQuestions.length;
-  const progress = isQuizFinished ? 100 : (currentQuestionIndex / allQuestions.length) * 100;
+  const progress = (currentQuestionIndex / allQuestions.length) * 100;
   const currentQuestion = allQuestions[currentQuestionIndex];
 
   return (
-    <div className="w-full max-w-2xl">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="font-bold text-lg flex items-center gap-2">
-          <BrainCircuit className="w-6 h-6 text-primary" />
-          BrainShift Quiz
+    <div className="w-full max-w-2xl mx-auto p-4">
+      {/* HEADER DO APP RESET */}
+      <div className="mb-6 flex items-center justify-between bg-zinc-900 p-4 rounded-2xl border border-zinc-800">
+        <h2 className="font-black text-xl flex items-center gap-2 text-white">
+          <RotateCw className="w-5 h-5 text-red-500" /> RESET
         </h2>
-        <div className="flex items-center gap-2 font-bold text-primary">
-          <Award className="w-6 h-6" />
+        <div className="flex items-center gap-2 font-bold text-green-400 bg-green-400/10 px-4 py-1 rounded-full border border-green-400/20">
+          <Award className="w-5 h-5" />
           <span>{xp} XP</span>
         </div>
       </div>
-      <Card className="overflow-hidden relative transition-all duration-500 min-h-[480px] flex flex-col">
-        <Progress value={progress} className="h-2" />
+
+      <Card className="bg-zinc-900 border-zinc-800 overflow-hidden relative min-h-[500px] flex flex-col shadow-2xl">
+        <Progress value={progress} className="h-1 bg-zinc-800" />
+        
         {isQuizFinished ? (
-          <div className="p-8 text-center flex flex-col items-center justify-center gap-6 flex-grow">
-            <CardTitle className="text-3xl font-bold">Quiz Concluído!</CardTitle>
-            <CardDescription className="text-lg">Você acumulou um total de</CardDescription>
-            <div className="text-7xl font-extrabold text-primary">{xp} XP</div>
-            <p className="text-muted-foreground max-w-md">
-              Você explorou diferentes facetas do seu pensamento. Continue se desenvolvendo!
-            </p>
-            <Button onClick={handleRestart} size="lg" className="mt-4">
-              <RotateCw className="mr-2 h-4 w-4" />
-              Recomeçar Quiz
+          <div className="p-10 text-center flex flex-col items-center justify-center gap-6 flex-grow">
+            <h2 className="text-4xl font-black text-white">ZEROU O JOGO!</h2>
+            <div className="text-6xl font-black text-green-400">{xp} XP</div>
+            <p className="text-zinc-400">Você dominou seu Neocórtex e agora é um Mestre da Mente.</p>
+            <Button onClick={handleRestart} variant="destructive" size="lg" className="font-bold uppercase tracking-widest">
+              Reiniciar Run
             </Button>
           </div>
         ) : (
-          <div className="relative flex-grow">
-            <div
-              className={`transition-opacity duration-300 w-full h-full ${showFeedback ? 'opacity-0' : 'opacity-100'}`}
-              style={{ transitionDelay: showFeedback ? '0ms' : '300ms' }}
-            >
-              <CardHeader>
-                <CardDescription>
-                  Questão {currentQuestionIndex + 1} de {allQuestions.length}
-                </CardDescription>
-                <CardTitle className="text-xl md:text-2xl">{currentQuestion.texto}</CardTitle>
-              </CardHeader>
-              <CardContent className="grid grid-cols-1 gap-3">
-                {currentQuestion.alternativas.map((alt) => (
-                  <Button
-                    key={alt.id}
-                    variant={selectedAnswer?.id === alt.id ? 'default' : 'outline'}
-                    size="lg"
-                    className={`h-auto justify-start text-left whitespace-normal py-3 transition-all duration-300 ${
-                      selectedAnswer && selectedAnswer.id !== alt.id ? 'opacity-50' : ''
-                    } ${
-                      selectedAnswer?.id === alt.id ? 'ring-2 ring-primary ring-offset-2' : ''
-                    }`}
-                    onClick={() => handleAnswerSelect(alt)}
-                    disabled={!!selectedAnswer}
-                  >
-                    <div className="flex items-start gap-3">
-                      <BrainIcon type={alt.tipo_cerebro} className="w-5 h-5 mt-1 shrink-0 text-muted-foreground" />
-                      <span>{alt.texto}</span>
+          <div className="relative flex-grow flex flex-col p-6">
+            <CardHeader className="p-0 mb-6">
+              <CardDescription className="text-zinc-500 font-mono">
+                MISSÃO {currentQuestion.id} / 100
+              </CardDescription>
+              <CardTitle className="text-xl md:text-2xl text-white leading-tight">
+                {currentQuestion.texto}
+              </CardTitle>
+            </CardHeader>
+
+            <CardContent className="p-0 grid gap-3">
+              {Object.entries(currentQuestion.alternativas).map(([key, value]) => (
+                <Button
+                  key={key}
+                  variant="outline"
+                  className={`h-auto justify-start text-left p-4 bg-zinc-800/50 border-zinc-700 hover:bg-zinc-800 text-white transition-all ${
+                    selectedAnswer === key ? 'border-primary ring-1 ring-primary' : ''
+                  }`}
+                  onClick={() => handleAnswerSelect(key)}
+                  disabled={!!selectedAnswer}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center font-bold text-zinc-500">
+                      {key}
                     </div>
-                  </Button>
-                ))}
-              </CardContent>
-            </div>
-            
-            {showFeedback && selectedAnswer && (
-              <div
-                className={`absolute inset-0 flex flex-col items-center justify-center bg-background p-8 transition-opacity duration-300 ${showFeedback ? 'opacity-100' : 'opacity-0'}`}
-                style={{ transitionDelay: showFeedback ? '300ms' : '0ms' }}
-              >
-                <div className="text-center">
-                  <BrainIcon type={selectedAnswer.tipo_cerebro} className="w-20 h-20 mx-auto text-accent animate-pulse" />
-                  <p className="mt-4 text-sm font-semibold uppercase tracking-wider text-accent">{selectedAnswer.tipo_cerebro}</p>
-                  <p className="mt-2 text-3xl font-bold text-foreground">+{selectedAnswer.pontos} XP</p>
-                  <p className="mt-2 text-muted-foreground">Ativando o pensamento {selectedAnswer.tipo_cerebro.toLowerCase()}!</p>
-                </div>
+                    <span className="flex-1 text-sm md:text-base">{value}</span>
+                  </div>
+                </Button>
+              ))}
+            </CardContent>
+
+            {/* Feedback Gamificado */}
+            {showFeedback && (
+              <div className="absolute inset-0 bg-zinc-950/90 flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-300">
+                <BrainIcon type={selectedAnswer!} className="w-16 h-16 mb-4 text-primary animate-bounce" />
+                <h3 className="text-2xl font-black text-white mb-2">
+                  {selectedAnswer === 'C' ? 'NEOCÓRTEX ATIVADO!' : selectedAnswer === 'B' ? 'SISTEMA LÍMBICO' : 'CÉREBRO REPTILIANO'}
+                </h3>
+                <p className="text-zinc-400">Processando evolução mental...</p>
               </div>
             )}
           </div>
         )}
       </Card>
+
+      <p className="text-center mt-6 text-zinc-600 text-[10px] uppercase tracking-[0.2em]">
+        Status: Online • Engine: Next.js • Database: Local
+      </p>
     </div>
   );
 }
