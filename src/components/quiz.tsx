@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { BrainCircuit, Brain, Heart, Turtle, Award, RotateCw, Check } from 'lucide-react';
+import { BrainCircuit, Brain, Heart, Turtle, Award, RotateCw, Check, Share2 } from 'lucide-react';
 import quizData from '@/data/questoes_shift.json';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -71,6 +71,17 @@ export default function Quiz() {
   const handleRestart = () => {
     localStorage.clear();
     window.location.reload();
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'RESET - Fortaleça sua mente contra o bullying',
+        text: 'O bullying não te define. O RESET sim. ⚡ Fortalece um amigo: Compartilhe o RESET.',
+        url: window.location.href,
+      })
+      .catch((error) => console.log('Error sharing', error));
+    }
   };
 
   if (!isLoaded) return <div className="font-headline text-2xl animate-pulse">CARREGANDO MISSÃO...</div>;
@@ -157,9 +168,15 @@ export default function Quiz() {
         )}
       </Card>
 
-      <p className="text-center mt-8 text-muted-foreground/50 text-xs uppercase tracking-widest">
-        Engine: Next.js • Database: LocalStorage
-      </p>
+      <footer className="text-center mt-8 font-medium text-white" style={{ textShadow: '0 0 8px hsla(270, 100%, 70%, 0.7)' }}>
+        <p className="text-sm">O bullying não te define. O RESET sim. ⚡</p>
+        <div className="flex items-center justify-center gap-2 mt-2">
+          <span className="text-xs">Fortalece um amigo: Compartilhe o RESET.</span>
+          <button onClick={handleShare} className="p-1 rounded-full hover:bg-white/10 transition-colors">
+            <Share2 className="w-4 h-4" />
+          </button>
+        </div>
+      </footer>
     </div>
   );
 }
