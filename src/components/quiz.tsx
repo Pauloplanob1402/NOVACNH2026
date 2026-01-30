@@ -40,10 +40,14 @@ export default function Quiz() {
     }
   }, [currentQuestionIndex, xp, isLoaded]);
 
-  // Efeito para garantir que a seleção seja limpa a cada nova questão
-  useEffect(() => {
-    setSelectedAnswer(null);
-  }, [currentQuestionIndex]);
+  const proximaQuestao = () => {
+    setShowFeedback(false);
+    setSelectedAnswer(null); // Reset explícito antes de avançar
+    setCurrentQuestionIndex(prev => prev + 1);
+    if ((currentQuestionIndex + 1) % 20 === 0) {
+      tocarSom('nivel');
+    }
+  }
 
   const tocarSom = (tipo: 'A' | 'B' | 'C' | 'nivel') => {
     const sons: Record<string, string> = {
@@ -63,13 +67,7 @@ export default function Quiz() {
     setXp(prev => prev + points);
     tocarSom(key as 'A' | 'B' | 'C');
     setShowFeedback(true);
-    setTimeout(() => {
-      setShowFeedback(false);
-      setCurrentQuestionIndex(prev => prev + 1);
-      if ((currentQuestionIndex + 1) % 20 === 0) {
-        tocarSom('nivel');
-      }
-    }, 2000);
+    setTimeout(proximaQuestao, 2000);
   };
 
   const handleRestart = () => {
@@ -135,7 +133,7 @@ export default function Quiz() {
             </Button>
           </div>
         ) : (
-          <div className="relative flex-grow flex flex-col p-6 sm:p-8">
+          <div key={currentQuestionIndex} className="relative flex-grow flex flex-col p-6 sm:p-8">
             <CardHeader className="p-0 mb-8">
               <CardDescription className="text-muted-foreground font-mono uppercase tracking-widest">
                 Missão {currentQuestion?.id || currentQuestionIndex + 1} / {allQuestions.length}
