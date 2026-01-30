@@ -83,7 +83,7 @@ export default function Quiz() {
     <div className="w-full max-w-2xl mx-auto p-4 font-body">
       <header className="mb-8 flex items-center justify-between">
         <h1 className="text-4xl font-headline text-primary flex items-center gap-3">
-          <RotateCw className="w-8 h-8" />
+          <RotateCw className="w-8 h-8 text-primary drop-shadow-[0_0_5px_hsl(var(--primary))]" />
           <span>RESET</span>
         </h1>
         <div className="flex items-center gap-2 font-bold text-accent bg-accent/10 px-4 py-2 rounded-full border border-accent/20">
@@ -110,7 +110,7 @@ export default function Quiz() {
               <CardDescription className="text-muted-foreground font-mono uppercase tracking-widest">
                 Missão {currentQuestion.id} / 100
               </CardDescription>
-              <CardTitle className="text-2xl md:text-3xl font-headline text-foreground leading-tight mt-2">
+              <CardTitle className="text-2xl md:text-3xl font-medium text-foreground leading-tight mt-2">
                 {currentQuestion.texto}
               </CardTitle>
             </CardHeader>
@@ -120,8 +120,15 @@ export default function Quiz() {
                 <Button
                   key={key}
                   variant="outline"
-                  className={`h-auto justify-start text-left p-4 bg-background/50 border-border hover:bg-primary/10 hover:border-primary text-foreground/80 hover:text-foreground transition-all duration-200 ease-in-out transform hover:scale-[1.02] group disabled:opacity-100 disabled:transform-none disabled:scale-100 disabled:cursor-default
-                    ${ selectedAnswer === key ? 'border-primary ring-2 ring-primary shadow-lg shadow-primary/20' : '' }`}
+                  className={`h-auto justify-start text-left p-4 bg-background/50 border text-foreground/80 hover:text-foreground transition-all duration-200 ease-in-out transform hover:scale-[1.02] group disabled:opacity-100 disabled:transform-none disabled:scale-100 disabled:cursor-default hover:bg-primary/10
+                    ${key === 'C'
+                      ? 'hover:border-accent hover:shadow-[0_0_12px_hsl(var(--accent))]'
+                      : 'hover:border-primary hover:shadow-[0_0_8px_hsl(var(--primary))]'
+                    }
+                    ${selectedAnswer === key
+                      ? (key === 'C' ? 'border-accent ring-2 ring-accent shadow-lg shadow-accent/20' : 'border-primary ring-2 ring-primary shadow-lg shadow-primary/20')
+                      : 'border-primary/20'
+                    }`}
                   onClick={() => handleAnswerSelect(key)}
                   disabled={!!selectedAnswer}
                 >
