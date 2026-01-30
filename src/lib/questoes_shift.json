@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "title": "BrainShift Quiz",
+    "version": "1.0"
+  },
+  "niveis": [
+    {
+      "nivel": 1,
+      "questoes": [
+        {
+          "id": "q1",
+          "texto": "Ao enfrentar um desafio inesperado no trabalho, qual é a sua primeira reação?",
+          "categoria": "Reação a Desafios",
+          "alternativas": [
+            { "id": "a1-1", "texto": "Agir imediatamente, focando na sobrevivência e controle da situação.", "pontos": 10, "tipo_cerebro": "Reptiliano" },
+            { "id": "a1-2", "texto": "Sentir o impacto emocional, buscando apoio e conexão com a equipe.", "pontos": 20, "tipo_cerebro": "Límbico" },
+            { "id": "a1-3", "texto": "Analisar a situação, planejar os próximos passos e buscar soluções lógicas.", "pontos": 30, "tipo_cerebro": "Neocórtex" }
+          ]
+        },
+        {
+          "id": "q2",
+          "texto": "Como você prefere receber feedback sobre seu desempenho?",
+          "categoria": "Comunicação",
+          "alternativas": [
+            { "id": "a2-1", "texto": "Direto e objetivo, focado em ações concretas para melhoria.", "pontos": 10, "tipo_cerebro": "Reptiliano" },
+            { "id": "a2-2", "texto": "De forma empática, com reconhecimento pelo esforço e consideração pelos sentimentos.", "pontos": 20, "tipo_cerebro": "Límbico" },
+            { "id": "a2-3", "texto": "Com dados e exemplos claros, explicando a lógica por trás da avaliação.", "pontos": 30, "tipo_cerebro": "Neocórtex" }
+          ]
+        },
+        {
+          "id": "q3",
+          "texto": "Ao tomar uma decisão importante, o que mais pesa para você?",
+          "categoria": "Tomada de Decisão",
+          "alternativas": [
+            { "id": "a3-1", "texto": "Instinto e segurança, escolhendo o caminho mais seguro e testado.", "pontos": 10, "tipo_cerebro": "Reptiliano" },
+            { "id": "a3-2", "texto": "Intuição e o impacto da decisão nas pessoas ao seu redor.", "pontos": 20, "tipo_cerebro": "Límbico" },
+            { "id": "a3-3", "texto": "Análise de prós e contras, dados e projeções futuras.", "pontos": 30, "tipo_cerebro": "Neocórtex" }
+          ]
+        },
+        {
+          "id": "q4",
+          "texto": "Em um projeto em equipe, qual papel você naturalmente assume?",
+          "categoria": "Trabalho em Equipe",
+          "alternativas": [
+            { "id": "a4-1", "texto": "O executor, garantindo que as tarefas sejam cumpridas de forma eficiente.", "pontos": 10, "tipo_cerebro": "Reptiliano" },
+            { "id": "a4-2", "texto": "O mediador, cuidando da harmonia e do bem-estar do grupo.", "pontos": 20, "tipo_cerebro": "Límbico" },
+            { "id": "a4-3", "texto": "O estrategista, analisando o cenário e definindo a melhor abordagem.", "pontos": 30, "tipo_cerebro": "Neocórtex" }
+          ]
+        }
+      ]
+    }
+  ]
+}
