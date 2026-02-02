@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { BrainCircuit, Brain, Heart, Turtle, Award, RotateCw, Check, Share2 } from 'lucide-react';
+import { BrainCircuit, Brain, Heart, Turtle, Award, RotateCw, Check } from 'lucide-react';
 import quizData from '@/data/questoes_shift.json';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,9 +9,9 @@ import { Progress } from '@/components/ui/progress';
 
 const BrainIcon = ({ type, className }: { type: string; className?: string }) => {
   switch (type) {
-    case 'A': return <Turtle className={className} />;
+    case 'correta': return <Brain className={className} />;
     case 'B': return <Heart className={className} />;
-    case 'C': return <Brain className={className} />;
+    case 'A': return <Turtle className={className} />;
     default: return <BrainCircuit className={className} />;
   }
 };
@@ -24,15 +24,18 @@ export default function Quiz() {
   const [xp, setXp] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [shuffledOptions, setShuffledOptions] = useState<{visualKey: string, originalKey: string, value: string}[]>([]);
 
+  // Carregar progresso
   useEffect(() => {
     const savedIndex = localStorage.getItem('reset-quiz-index');
     const savedXp = localStorage.getItem('reset-quiz-xp');
-    if (savedIndex) setCurrentQuestionIndex(Math.min(parseInt(savedIndex), allQuestions.length));
+    if (savedIndex) setCurrentQuestionIndex(Math.min(parseInt(savedIndex), allQuestions.length - 1));
     if (savedXp) setXp(parseInt(savedXp));
     setIsLoaded(true);
   }, []);
 
+  // Salvar progresso
   useEffect(() => {
     if (isLoaded) {
       localStorage.setItem('reset-quiz-index', currentQuestionIndex.toString());
@@ -40,32 +43,63 @@ export default function Quiz() {
     }
   }, [currentQuestionIndex, xp, isLoaded]);
 
+  // Lógica de Embaralhamento
+  useEffect(() => {
+    if (isLoaded && currentQuestionIndex < allQuestions.length) {
+      const currentQuestion = allQuestions[currentQuestionIndex];
+      const options = Object.entries(currentQuestion.alternativas).map(([key, value]) => ({
+        originalKey: key,
+        value: value as string
+      }));
+      
+      const shuffled = [...options].sort(() => Math.random() - 0.5);
+      
+      const visualOptions = shuffled.map((opt, index) => ({
+        visualKey: String.fromCharCode(65 + index), 
+        originalKey: opt.originalKey,
+        value: opt.value
+      }));
+      
+      setShuffledOptions(visualOptions);
+    }
+  }, [currentQuestionIndex, isLoaded]);
+
   const proximaQuestao = () => {
     setShowFeedback(false);
-    setSelectedAnswer(null); // Reset explícito antes de avançar
+    setSelectedAnswer(null);
     setCurrentQuestionIndex(prev => prev + 1);
     if ((currentQuestionIndex + 1) % 20 === 0) {
       tocarSom('nivel');
     }
   }
 
-  const tocarSom = (tipo: 'A' | 'B' | 'C' | 'nivel') => {
+  const tocarSom = (tipo: 'click' | 'vitoria' | 'nivel') => {
     const sons: Record<string, string> = {
-      'A': 'sounds/click.mp3',
-      'B': 'sounds/click.mp3',
-      'C': 'sounds/brain-power.mp3',
+      'click': 'sounds/click.mp3',
+      'vitoria': 'sounds/brain-power.mp3',
       'nivel': 'sounds/level-up.mp3'
     };
     const audio = new Audio(sons[tipo]);
-    audio.play().catch(e => console.log("Aguardando interação para tocar som"));
+    audio.play().catch(e => console.log("Aguardando interação"));
   };
 
-  const handleAnswerSelect = (key: string) => {
+  const handleAnswerSelect = (visualKey: string) => {
     if (selectedAnswer) return;
-    setSelectedAnswer(key);
-    const points = key === 'C' ? 10 : key === 'B' ? 5 : 0;
-    setXp(prev => prev + points);
-    tocarSom(key as 'A' | 'B' | 'C');
+    
+    setSelectedAnswer(visualKey);
+    const selectedOption = shuffledOptions.find(opt => opt.visualKey === visualKey);
+
+    if (selectedOption?.originalKey === 'C') {
+      setXp(prev => prev + 10);
+      tocarSom('vitoria');
+    } else if (selectedOption?.originalKey === 'B') {
+      setXp(prev => prev + 5);
+      tocarSom('click');
+    } else {
+      setXp(prev => prev + 0);
+      tocarSom('click');
+    }
+
     setShowFeedback(true);
     setTimeout(proximaQuestao, 2000);
   };
@@ -86,14 +120,12 @@ export default function Quiz() {
         await navigator.share(shareData);
       } else {
         await navigator.clipboard.writeText(window.location.href);
-        alert('Link copiado! Agora é só colar para o seu amigo.');
+        alert('Link copiado!');
       }
-    } catch (err) {
-      console.log('Erro ao compartilhar');
-    }
+    } catch (err) { console.log('Erro ao compartilhar'); }
   };
 
-  if (!isLoaded) return <div className="font-headline text-2xl animate-pulse">CARREGANDO MISSÃO...</div>;
+  if (!isLoaded) return <div className="font-headline text-2xl animate-pulse p-10 text-primary">CARREGANDO MISSÃO...</div>;
 
   const isQuizFinished = currentQuestionIndex >= allQuestions.length;
   const progress = (currentQuestionIndex / allQuestions.length) * 100;
@@ -117,26 +149,20 @@ export default function Quiz() {
         
         {isQuizFinished ? (
           <div className="p-10 text-center flex flex-col items-center justify-center gap-6 flex-grow">
-            <p className="text-lg italic text-muted-foreground max-w-md" style={{fontWeight: 500}}>Eu aposto que você sente que ninguém sabe como é FICAR SOFRENDO TANTO BULLYING e estar preso a uma única saída, não é verdade?</p>
+            <p className="text-lg italic text-muted-foreground max-w-md font-medium">O bullying não define você. A verdadeira força está na empatia e na coragem.</p>
             <div className="text-7xl font-bold text-white">{xp} XP</div>
-            
-            <Card className="bg-background/20 border-primary/20 p-4 rounded-lg max-w-md">
-                <p className="text-sm text-foreground/80 mb-2" style={{fontWeight: 500}}>O bullying não define você. A verdadeira força está na empatia e na coragem de ouvir.</p>
-                <p className="text-sm font-semibold text-white" style={{fontWeight: 500}} >Se estiver pesado demais, procure um professor ou um adulto de confiança. Você não está sozinho.</p>
-            </Card>
-
-            <Button onClick={handleShare} variant="default" size="lg" className="font-bold tracking-wide bg-accent/90 hover:bg-accent text-white shadow-lg shadow-accent/20">
-              Curtiu o RESET? Compartilhe com quem também precisa despertar o Neocórtex. ⚡
+            <Button onClick={handleShare} variant="default" size="lg" className="bg-accent/90 hover:bg-accent text-white shadow-lg">
+              Compartilhar Despertar ⚡
             </Button>
-            <Button onClick={handleRestart} variant="outline" size="sm" className="font-bold uppercase tracking-widest text-muted-foreground hover:text-white mt-4">
-              REINICIAR RUN
+            <Button onClick={handleRestart} variant="outline" size="sm" className="mt-4">
+              REINICIAR
             </Button>
           </div>
         ) : (
           <div key={currentQuestionIndex} className="relative flex-grow flex flex-col p-6 sm:p-8">
             <CardHeader className="p-0 mb-8">
-              <CardDescription className="text-muted-foreground font-mono uppercase tracking-widest">
-                Missão {currentQuestion?.id || currentQuestionIndex + 1} / {allQuestions.length}
+              <CardDescription className="text-muted-foreground font-mono uppercase tracking-widest text-xs">
+                Missão {currentQuestionIndex + 1} / {allQuestions.length}
               </CardDescription>
               <CardTitle className="text-2xl md:text-3xl font-medium text-foreground leading-tight mt-2">
                 {currentQuestion?.texto}
@@ -144,43 +170,44 @@ export default function Quiz() {
             </CardHeader>
 
             <CardContent className="p-0 grid gap-4">
-              {currentQuestion && Object.entries(currentQuestion.alternativas).map(([key, value]) => (
+              {shuffledOptions.map((option) => (
                 <Button
-                  key={key}
+                  key={option.visualKey}
                   variant="outline"
-                  className={`h-auto min-h-min justify-start text-left py-3 px-4 bg-background/50 border text-foreground/80 hover:text-foreground transition-all duration-200 ease-in-out transform hover:scale-[1.02] group disabled:opacity-100 disabled:transform-none disabled:scale-100 disabled:cursor-default hover:bg-primary/10
-                    ${key === 'C'
-                      ? 'hover:border-accent hover:shadow-[0_0_12px_hsl(var(--accent))]'
-                      : 'hover:border-primary hover:shadow-[0_0_8px_hsl(var(--primary))]'
-                    }
-                    ${selectedAnswer === key
-                      ? (key === 'C' ? 'border-accent ring-2 ring-accent shadow-lg shadow-accent/20' : 'border-primary ring-2 ring-primary shadow-lg shadow-primary/20')
-                      : 'border-primary/20'
+                  className={`h-auto min-h-min justify-start text-left py-3 px-4 bg-background/50 border text-foreground/80 transition-all duration-200 hover:scale-[1.02] disabled:opacity-100
+                    ${selectedAnswer === option.visualKey
+                      ? (option.originalKey === 'C' ? 'border-accent ring-2 ring-accent shadow-accent/20' : 'border-primary ring-2 ring-primary')
+                      : 'border-primary/20 hover:bg-primary/10'
                     }`}
-                  onClick={() => handleAnswerSelect(key)}
+                  onClick={() => handleAnswerSelect(option.visualKey)}
                   disabled={!!selectedAnswer}
                 >
                   <div className="flex items-start gap-4 w-full">
-                    <div className={`w-10 h-10 rounded-lg bg-secondary flex items-center justify-center font-bold font-mono text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary transition-colors flex-shrink-0
-                      ${selectedAnswer === key ? 'bg-primary text-primary-foreground' : ''}`}>
-                      {key}
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold font-mono flex-shrink-0
+                      ${selectedAnswer === option.visualKey ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground'}`}>
+                      {option.visualKey}
                     </div>
-                    <span className="flex-1 text-base whitespace-normal">{value}</span>
-                    {selectedAnswer === key && <Check className="w-6 h-6 text-accent self-center ml-auto"/>}
+                    <span className="flex-1 text-base whitespace-normal pt-2">{option.value}</span>
+                    {selectedAnswer === option.visualKey && <Check className="w-6 h-6 text-accent self-center ml-auto"/>}
                   </div>
                 </Button>
               ))}
             </CardContent>
 
-            <p className='text-center text-[10px] text-gray-500 mt-6'>Bullying é crime (Lei 14.811/24). Sua voz tem poder, procure ajuda.</p>
+            {/* FRASE ATUALIZADA ABAIXO */}
+            <p className='text-center text-[12.5px] text-gray-400 mt-6 leading-relaxed'>
+              Sua voz é o seu <span className="font-bold text-primary">RESET! </span>    
+              Bullying é crime (Lei 14.811/24). <br/>
+              Não joga solo: deu ruim? Chama um adulto. <span className="font-bold text-white">Passa a visão!</span> 
+            </p>
 
             {showFeedback && (
               <div className="absolute inset-0 bg-background/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-300 z-10">
-                <BrainIcon type={selectedAnswer!} className="w-20 h-20 mb-4 text-primary animate-pulse"/>
-                <h3 className="text-3xl font-headline text-white mb-2">
-                  {selectedAnswer === 'C' ? 'NEOCÓRTEX ATIVADO!' : selectedAnswer === 'B' ? 'SISTEMA LÍMBICO' : 'CÉREBRO REPTILIANO'}
+                <BrainIcon type={shuffledOptions.find(o => o.visualKey === selectedAnswer)?.originalKey === 'C' ? 'correta' : shuffledOptions.find(o => o.visualKey === selectedAnswer)?.originalKey || ''} className="w-20 h-20 mb-4 text-primary animate-pulse"/>
+                <h3 className="text-3xl font-headline text-white mb-2 uppercase">
+                  {shuffledOptions.find(o => o.visualKey === selectedAnswer)?.originalKey === 'C' ? 'NEOCÓRTEX ATIVADO!' : shuffledOptions.find(o => o.visualKey === selectedAnswer)?.originalKey === 'B' ? 'SISTEMA LÍMBICO' : 'CÉREBRO REPTILIANO'}
                 </h3>
-                <p className="text-muted-foreground">Processando evolução mental...</p>
+                <p className="text-muted-foreground">Processando evolução...</p>
               </div>
             )}
           </div>
