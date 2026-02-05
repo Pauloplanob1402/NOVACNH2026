@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Cores da Marca */
+    --brand-primary: 0 21 59; /* Azul Royal: #00153B */
+    --brand-secondary: 250 204 21;  /* Amarelo Trânsito: #FACC15 */
+
+    /* Cores de Fundo */
+    --background: 127 66% 49%; /* Verde do Logo: #2AD13D */
+    --foreground: 248 250 252; /* Texto principal (branco) */
+
+    /* Cores Semânticas */
+    --card: 0 21 59; /* Fundo dos cards (Azul Escuro) */
+    --card-foreground: 248 250 252; /* Texto nos cards */
+
+    --popover: 0 21 59;
+    --popover-foreground: 248 250 252;
+
+    --primary: 250 204 21;
+    --primary-foreground: 0 21 59;
+
+    --secondary: 241 245 249; 
+    --secondary-foreground: 30 41 59; 
+
+    --muted: 241 245 249;
+    --muted-foreground: 100 116 139;
+
+    --accent: 241 245 249;
+    --accent-foreground: 30 41 59;
+
+    --destructive: 239 68 68; 
+    --destructive-foreground: 248 250 252;
+
+    --border: 30 41 59; 
+    --input: 30 41 59;
+    --ring: 250 204 21; 
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background: radial-gradient(ellipse at center, hsl(127 66% 52%), hsl(127 66% 40%));
+  }
+}
+
+@layer components {
+  .correct-answer-glow {
+    animation: green-glow 0.8s ease-in-out;
+    box-shadow: 0 0 15px 5px hsla(127, 66%, 49%, 0.7);
+  }
+}
+
+@keyframes green-glow {
+  0% {
+    box-shadow: 0 0 0 0 hsla(127, 66%, 49%, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px 8px hsla(127, 66%, 49%, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 0 0 hsla(127, 66%, 49%, 0);
+  }
+}

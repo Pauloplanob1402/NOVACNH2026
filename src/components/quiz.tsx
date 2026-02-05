@@ -1,218 +1,182 @@
+
 "use client";
 
-import { useState, useEffect } from 'react';
-import { BrainCircuit, Brain, Heart, Turtle, Award, RotateCw, Check } from 'lucide-react';
-import quizData from '@/data/questoes_shift.json';
+import { useState, useEffect, useCallback } from 'react';
+import { Award, CheckCircle, XCircle, RotateCw, Share2 } from 'lucide-react';
+import quizDataJson from '@/data/questoes_cnh.json';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { Questao, QuizData } from '@/lib/types';
 
-const BrainIcon = ({ type, className }: { type: string; className?: string }) => {
-  switch (type) {
-    case 'correta': return <Brain className={className} />;
-    case 'B': return <Heart className={className} />;
-    case 'A': return <Turtle className={className} />;
-    default: return <BrainCircuit className={className} />;
+const quizData: QuizData = quizDataJson;
+
+const tocarSom = (som: 'acerto' | 'erro' | 'finalizar') => {
+  if (typeof window !== 'undefined') {
+    const audio = new Audio(`/sounds/${som}.mp3`);
+    audio.play().catch(error => {
+      console.error(`Erro ao tocar o som ${som}:`, error);
+    });
   }
 };
 
 export default function Quiz() {
-  const allQuestions = quizData.niveis.flatMap(level => level.questoes);
+  const [questoes, setQuestoes] = useState<Questao[]>([]);
+  const [indiceQuestaoAtual, setIndiceQuestaoAtual] = useState(0);
+  const [pontuacao, setPontuacao] = useState(0);
+  const [respostaSelecionada, setRespostaSelecionada] = useState<number | null>(null);
+  const [mostrarExplicacao, setMostrarExplicacao] = useState(false);
+  const [quizFinalizado, setQuizFinalizado] = useState(false);
+  const [showGlow, setShowGlow] = useState(false); // Estado para a animação de brilho
 
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [xp, setXp] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [shuffledOptions, setShuffledOptions] = useState<{visualKey: string, originalKey: string, value: string}[]>([]);
-
-  // Carregar progresso
   useEffect(() => {
-    const savedIndex = localStorage.getItem('reset-quiz-index');
-    const savedXp = localStorage.getItem('reset-quiz-xp');
-    if (savedIndex) setCurrentQuestionIndex(Math.min(parseInt(savedIndex), allQuestions.length - 1));
-    if (savedXp) setXp(parseInt(savedXp));
-    setIsLoaded(true);
+    const todasQuestoes = quizData.niveis.flatMap(nivel => nivel.questoes);
+    setQuestoes(todasQuestoes);
   }, []);
 
-  // Salvar progresso
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem('reset-quiz-index', currentQuestionIndex.toString());
-      localStorage.setItem('reset-quiz-xp', xp.toString());
-    }
-  }, [currentQuestionIndex, xp, isLoaded]);
+  const handleResposta = (index: number) => {
+    if (respostaSelecionada !== null) return;
 
-  // Lógica de Embaralhamento
-  useEffect(() => {
-    if (isLoaded && currentQuestionIndex < allQuestions.length) {
-      const currentQuestion = allQuestions[currentQuestionIndex];
-      const options = Object.entries(currentQuestion.alternativas).map(([key, value]) => ({
-        originalKey: key,
-        value: value as string
-      }));
-      
-      const shuffled = [...options].sort(() => Math.random() - 0.5);
-      
-      const visualOptions = shuffled.map((opt, index) => ({
-        visualKey: String.fromCharCode(65 + index), 
-        originalKey: opt.originalKey,
-        value: opt.value
-      }));
-      
-      setShuffledOptions(visualOptions);
-    }
-  }, [currentQuestionIndex, isLoaded]);
+    setRespostaSelecionada(index);
+    const questaoCorreta = questoes[indiceQuestaoAtual].respostaCorreta;
 
-  const proximaQuestao = () => {
-    setShowFeedback(false);
-    setSelectedAnswer(null);
-    setCurrentQuestionIndex(prev => prev + 1);
-    if ((currentQuestionIndex + 1) % 20 === 0) {
-      tocarSom('nivel');
+    if (index === questaoCorreta) {
+      setPontuacao(p => p + 1);
+      tocarSom('acerto');
+      setShowGlow(true); // Ativa o brilho
+    } else {
+      tocarSom('erro');
     }
+
+    setMostrarExplicacao(true);
+  };
+
+  const proximaQuestao = useCallback(() => {
+    setShowGlow(false); // Desativa o brilho para a próxima questão
+    setMostrarExplicacao(false);
+    setRespostaSelecionada(null);
+
+    if (indiceQuestaoAtual < questoes.length - 1) {
+      setIndiceQuestaoAtual(i => i + 1);
+    } else {
+      setQuizFinalizado(true);
+      tocarSom('finalizar');
+    }
+  }, [indiceQuestaoAtual, questoes.length]);
+
+  const reiniciarQuiz = () => {
+    setShowGlow(false);
+    setIndiceQuestaoAtual(0);
+    setPontuacao(0);
+    setRespostaSelecionada(null);
+    setMostrarExplicacao(false);
+    setQuizFinalizado(false);
+  };
+
+  const shareResult = async () => {
+    const shareText = `Estou estudando para a Nova CNH 2026 e acertei ${pontuacao} questões! 🚗💨`;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Meu Resultado no Simulado CNH 2026',
+          text: shareText,
+          url: window.location.href
+        });
+      } catch (error) {
+        console.error('Erro ao compartilhar:', error);
+      }
+    } else {
+      // Fallback para desktop ou navegadores sem suporte
+      navigator.clipboard.writeText(shareText);
+      alert('Resultado copiado para a área de transferência! Cole no seu app de mensagens para compartilhar.');
+    }
+  };
+
+
+  if (questoes.length === 0) {
+    return <div className="text-center p-8 text-white">Carregando simulado...</div>;
   }
 
-  const tocarSom = (tipo: 'click' | 'vitoria' | 'nivel') => {
-    const sons: Record<string, string> = {
-      'click': 'sounds/click.mp3',
-      'vitoria': 'sounds/brain-power.mp3',
-      'nivel': 'sounds/level-up.mp3'
-    };
-    const audio = new Audio(sons[tipo]);
-    audio.play().catch(e => console.log("Aguardando interação"));
-  };
+  const questaoAtual = questoes[indiceQuestaoAtual];
+  const progresso = ((indiceQuestaoAtual + 1) / 100) * 100;
 
-  const handleAnswerSelect = (visualKey: string) => {
-    if (selectedAnswer) return;
-    
-    setSelectedAnswer(visualKey);
-    const selectedOption = shuffledOptions.find(opt => opt.visualKey === visualKey);
-
-    if (selectedOption?.originalKey === 'C') {
-      setXp(prev => prev + 10);
-      tocarSom('vitoria');
-    } else if (selectedOption?.originalKey === 'B') {
-      setXp(prev => prev + 5);
-      tocarSom('click');
-    } else {
-      setXp(prev => prev + 0);
-      tocarSom('click');
-    }
-
-    setShowFeedback(true);
-    setTimeout(proximaQuestao, 2000);
-  };
-
-  const handleRestart = () => {
-    localStorage.clear();
-    window.location.reload();
-  };
-
-  const handleShare = async () => {
-    const shareData = {
-      title: 'RESET',
-      text: 'O bullying não te define. O RESET sim. ⚡',
-      url: window.location.href
-    };
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(window.location.href);
-        alert('Link copiado!');
-      }
-    } catch (err) { console.log('Erro ao compartilhar'); }
-  };
-
-  if (!isLoaded) return <div className="font-headline text-2xl animate-pulse p-10 text-primary">CARREGANDO MISSÃO...</div>;
-
-  const isQuizFinished = currentQuestionIndex >= allQuestions.length;
-  const progress = (currentQuestionIndex / allQuestions.length) * 100;
-  const currentQuestion = allQuestions[currentQuestionIndex];
+  if (quizFinalizado) {
+    return (
+      <Card className="w-full max-w-2xl mx-auto p-8 text-center bg-card text-card-foreground">
+        <CardTitle className="text-3xl font-bold mb-4 text-brand-secondary">Simulado Finalizado!</CardTitle>
+        <CardContent className="flex flex-col gap-4">
+          <p className="text-xl">Sua pontuação final foi:</p>
+          <div className="text-6xl font-bold text-primary">
+            {pontuacao} / 100
+          </div>
+          <Button onClick={reiniciarQuiz} size="lg" className="bg-brand-secondary text-brand-primary hover:bg-brand-secondary/90">
+            <RotateCw className="mr-2 h-5 w-5" />
+            Refazer Simulado
+          </Button>
+          <Button onClick={shareResult} size="lg" variant="outline" className="bg-green-500 text-white hover:bg-green-600 border-green-500">
+            <Share2 className="mr-2 h-5 w-5" />
+            Compartilhar no WhatsApp
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4 font-body">
-      <header className="mb-8 flex items-center justify-between">
-        <h1 className="text-4xl font-headline text-primary flex items-center gap-3">
-          <RotateCw className="w-8 h-8 text-primary drop-shadow-[0_0_5px_hsl(var(--primary))]"/>
-          <span>RESET</span>
-        </h1>
-        <div className="flex items-center gap-2 font-bold text-accent bg-accent/10 px-4 py-2 rounded-full border border-accent/20">
-          <Award className="w-5 h-5"/>
-          <span>{xp} XP</span>
+    <div className="w-full max-w-2xl mx-auto p-4">
+      <header className="mb-6 flex items-center justify-between">
+        <h1 className="text-3xl font-bold text-white">NOVA CNH 2026</h1>
+        <div className="flex items-center gap-3 font-bold text-lg text-white">
+          <Award className="w-6 h-6 text-brand-secondary"/>
+          <span>{pontuacao} Pontos</span>
         </div>
       </header>
 
-      <Card className="bg-card/50 border-primary/20 backdrop-blur-lg overflow-hidden relative min-h-[550px] flex flex-col shadow-2xl shadow-primary/10">
-        <Progress value={progress} className="h-2 bg-primary/10 [&>div]:bg-accent"/>
-        
-        {isQuizFinished ? (
-          <div className="p-10 text-center flex flex-col items-center justify-center gap-6 flex-grow">
-            <p className="text-lg italic text-muted-foreground max-w-md font-medium">O bullying não define você. A verdadeira força está na empatia e na coragem.</p>
-            <div className="text-7xl font-bold text-white">{xp} XP</div>
-            <Button onClick={handleShare} variant="default" size="lg" className="bg-accent/90 hover:bg-accent text-white shadow-lg">
-              Compartilhar Despertar ⚡
-            </Button>
-            <Button onClick={handleRestart} variant="outline" size="sm" className="mt-4">
-              REINICIAR
-            </Button>
-          </div>
-        ) : (
-          <div key={currentQuestionIndex} className="relative flex-grow flex flex-col p-6 sm:p-8">
-            <CardHeader className="p-0 mb-8">
-              <CardDescription className="text-muted-foreground font-mono uppercase tracking-widest text-xs">
-                Missão {currentQuestionIndex + 1} / {allQuestions.length}
-              </CardDescription>
-              <CardTitle className="text-2xl md:text-3xl font-medium text-foreground leading-tight mt-2">
-                {currentQuestion?.texto}
-              </CardTitle>
-            </CardHeader>
-
-            <CardContent className="p-0 grid gap-4">
-              {shuffledOptions.map((option) => (
-                <Button
-                  key={option.visualKey}
-                  variant="outline"
-                  className={`h-auto min-h-min justify-start text-left py-3 px-4 bg-background/50 border text-foreground/80 transition-all duration-200 hover:scale-[1.02] disabled:opacity-100
-                    ${selectedAnswer === option.visualKey
-                      ? (option.originalKey === 'C' ? 'border-accent ring-2 ring-accent shadow-accent/20' : 'border-primary ring-2 ring-primary')
-                      : 'border-primary/20 hover:bg-primary/10'
-                    }`}
-                  onClick={() => handleAnswerSelect(option.visualKey)}
-                  disabled={!!selectedAnswer}
-                >
-                  <div className="flex items-start gap-4 w-full">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold font-mono flex-shrink-0
-                      ${selectedAnswer === option.visualKey ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground'}`}>
-                      {option.visualKey}
-                    </div>
-                    <span className="flex-1 text-base whitespace-normal pt-2">{option.value}</span>
-                    {selectedAnswer === option.visualKey && <Check className="w-6 h-6 text-accent self-center ml-auto"/>}
-                  </div>
-                </Button>
-              ))}
-            </CardContent>
-
-            {/* FRASE ATUALIZADA ABAIXO */}
-            <p className='text-center text-[12.5px] text-gray-400 mt-6 leading-relaxed'>
-              Sua voz é o seu <span className="font-bold text-primary">RESET! </span>    
-              Bullying é crime (Lei 14.811/24). <br/>
-              Não joga solo: deu ruim? Chama um adulto. <span className="font-bold text-white">Passa a visão!</span> 
-            </p>
-
-            {showFeedback && (
-              <div className="absolute inset-0 bg-background/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-300 z-10">
-                <BrainIcon type={shuffledOptions.find(o => o.visualKey === selectedAnswer)?.originalKey === 'C' ? 'correta' : shuffledOptions.find(o => o.visualKey === selectedAnswer)?.originalKey || ''} className="w-20 h-20 mb-4 text-primary animate-pulse"/>
-                <h3 className="text-3xl font-headline text-white mb-2 uppercase">
-                  {shuffledOptions.find(o => o.visualKey === selectedAnswer)?.originalKey === 'C' ? 'NEOCÓRTEX ATIVADO!' : shuffledOptions.find(o => o.visualKey === selectedAnswer)?.originalKey === 'B' ? 'SISTEMA LÍMBICO' : 'CÉREBRO REPTILIANO'}
-                </h3>
-                <p className="text-muted-foreground">Processando evolução...</p>
+      <Card className={`overflow-hidden bg-card text-card-foreground border-border transition-shadow duration-500 ${showGlow ? 'correct-answer-glow' : ''}`}>
+        <Progress value={progresso} className="h-2 bg-brand-secondary" />
+        <CardHeader>
+          <CardTitle className="text-xl md:text-2xl leading-tight text-white">
+            ({indiceQuestaoAtual + 1}/100) {questaoAtual.texto}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-3">
+          {questaoAtual.alternativas.map((alternativa, index) => {
+            const isSelected = respostaSelecionada === index;
+            const isCorrect = questaoAtual.respostaCorreta === index;
+            
+            let buttonClass = 'bg-gray-200 text-gray-800 hover:bg-gray-300';
+            if (isSelected) {
+              buttonClass = isCorrect ? 'bg-yellow-400 text-black' : 'bg-red-600 text-white';
+            } else if (respostaSelecionada !== null && isCorrect) {
+                buttonClass = 'bg-yellow-400 text-black';
+            }
+            
+            return (
+            <Button
+              key={index}
+              className={`h-auto justify-start text-left py-3 px-4 transition-all duration-300 ${buttonClass}`}
+              onClick={() => handleResposta(index)}
+              disabled={respostaSelecionada !== null}
+            >
+              <div className="flex items-center gap-4">
+                 <span className="font-bold">{String.fromCharCode(65 + index)}</span>
+                 <span className="flex-1 whitespace-normal">{alternativa}</span>
+                 {isSelected && (isCorrect ? <CheckCircle /> : <XCircle />)}
               </div>
-            )}
-          </div>
-        )}
+            </Button>
+          )} )}
+        </CardContent>
       </Card>
+
+      {mostrarExplicacao && (
+        <Card className="mt-4 p-4 bg-gray-800 text-white border-t-4 border-brand-secondary">
+            <h3 className="font-bold text-lg mb-2">Explicação:</h3>
+            <p>{questaoAtual.explicacao}</p>
+            <Button onClick={proximaQuestao} className="mt-4 w-full bg-brand-secondary text-brand-primary hover:bg-brand-secondary/90" size="lg">
+              Próxima Questão
+            </Button>
+        </Card>
+      )}
     </div>
   );
 }

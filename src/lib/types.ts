@@ -1,26 +1,22 @@
-export interface Alternative {
-  id: string;
+
+export interface Questao {
+  id: number;
   texto: string;
-  pontos: number;
-  tipo_cerebro: 'Reptiliano' | 'Límbico' | 'Neocórtex';
+  alternativas: string[];
+  respostaCorreta: number;
+  explicacao: string;
 }
 
-export interface Question {
-  id: string;
-  texto: string;
-  categoria: string;
-  alternativas: Alternative[];
-}
-
-export interface Level {
-  nivel: number;
-  questoes: Question[];
+export interface Nivel {
+  id: number;
+  nome: string;
+  questoes: Questao[];
 }
 
 export interface QuizData {
   metadata: {
-    title: string;
-    version: string;
+    total_questoes: number;
+    versao: string;
   };
-  niveis: Level[];
+  niveis: Nivel[];
 }
