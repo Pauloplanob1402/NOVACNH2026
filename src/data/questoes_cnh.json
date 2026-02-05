@@ -1,26 +1,1143 @@
 {
   "metadata": {
     "total_questoes": 100,
-    "versao": "1.0.0 - CNH 2026"
+    "total_niveis": 5,
+    "versao": "1.0.0 - CNH 2026",
+    "descricao": "Simulado completo para prova teórica do Detran baseado no CTB 2026"
   },
   "niveis": [
     {
       "id": 1,
-      "nome": "SIMULADO DETRAN 2026",
+      "nome": "NÍVEL 1: INTRODUÇÃO E NORMAS GERAIS",
+      "descricao": "O básico para não zerar",
       "questoes": [
         {
           "id": 1,
-          "texto": "De acordo com a nova legislação de 2026, qual é a penalidade para o condutor que utilizar o celular ao volante, mesmo que seja para consulta de mapas?",
-          "alternativas": ["Multa leve e 3 pontos na CNH.", "Multa grave, 5 pontos na CNH e suspensão por 30 dias.", "Multa gravíssima, 7 pontos na CNH e remoção do veículo."],
-          "respostaCorreta": 2,
-          "explicacao": "A nova legislação de 2026 classifica o uso de celular ao volante como infração gravíssima, visando reduzir acidentes causados por distração."
+          "texto": "Qual é a hierarquia correta das leis de trânsito no Brasil?",
+          "alternativas": [
+            "Constituição Federal → CTB → Resoluções do CONTRAN → Portarias do DENATRAN",
+            "CTB → Constituição Federal → Portarias → Resoluções",
+            "Resoluções → CTB → Constituição → Portarias"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "A hierarquia das leis segue a pirâmide: Constituição Federal (topo) → CTB (Código de Trânsito Brasileiro) → Resoluções do CONTRAN → Portarias do DENATRAN. Leis superiores prevalecem sobre as inferiores."
         },
         {
           "id": 2,
-          "texto": "Qual a nova distância mínima lateral obrigatória ao ultrapassar ciclistas segundo o CTB 2026?",
-          "alternativas": ["1.0 metro.", "1.5 metros.", "2.0 metros."],
+          "texto": "O Sistema Nacional de Trânsito (SNT) é composto por quais órgãos principais?",
+          "alternativas": [
+            "Apenas CONTRAN e DENATRAN",
+            "CONTRAN, DENATRAN, DETRAN, PRF, Jari e Cetran",
+            "Somente DETRAN e Polícias Rodoviárias"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "O SNT é integrado por órgãos normativos (CONTRAN), executivos (DENATRAN, DETRAN, PRF, PM), julgadores (JARI, CETRAN) e consultivos. Todos trabalham de forma coordenada."
+        },
+        {
+          "id": 3,
+          "texto": "Para obter a CNH categoria B em 2026, qual é a idade mínima e os documentos necessários?",
+          "alternativas": [
+            "16 anos, RG e CPF",
+            "18 anos, documento de identidade, CPF, comprovante de residência",
+            "21 anos, certidão de nascimento e CPF"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "A idade mínima para CNH categoria B é 18 anos. Exige-se documento oficial com foto (RG/CNH), CPF e comprovante de residência atualizado."
+        },
+        {
+          "id": 4,
+          "texto": "Qual a principal diferença entre ACC (Autorização para Conduzir Ciclomotor) e CNH categoria A?",
+          "alternativas": [
+            "ACC permite dirigir qualquer moto; CNH A só ciclomotor",
+            "ACC é para ciclomotores até 50cc; CNH A para motos acima de 50cc",
+            "Não há diferença, são equivalentes"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "ACC é exclusiva para ciclomotores (até 50 cilindradas e 50 km/h). CNH categoria A permite conduzir motocicletas acima de 50cc."
+        },
+        {
+          "id": 5,
+          "texto": "Na nova regra de 2026, o que mudou no exame prático de direção?",
+          "alternativas": [
+            "A baliza deixou de ser eliminatória e se tornou apenas pontuável",
+            "Não há mais exame de baliza",
+            "A baliza continua eliminatória"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "A partir de 2026, erros na baliza não eliminam o candidato automaticamente, apenas somam pontos de falta. A aprovação depende da pontuação total."
+        },
+        {
+          "id": 6,
+          "texto": "Qual é a validade da CNH para condutores entre 50 e 70 anos?",
+          "alternativas": [
+            "5 anos",
+            "10 anos",
+            "3 anos"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "De 50 a 70 anos: validade de 5 anos. Abaixo de 50: 10 anos. Acima de 70: 3 anos. Regra atual do CTB."
+        },
+        {
+          "id": 7,
+          "texto": "É obrigatório portar qual documento ao dirigir após a digitalização do CRLV?",
+          "alternativas": [
+            "CRLV impresso obrigatoriamente",
+            "CRLVe (digital) ou impresso, e CNH física ou digital",
+            "Apenas a CNH física"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Com o CRLVe digital, não é obrigatório portar o documento físico, desde que apresente a versão digital via aplicativo. CNH também pode ser digital."
+        },
+        {
+          "id": 8,
+          "texto": "Como são classificadas as vias brasileiras?",
+          "alternativas": [
+            "Apenas urbanas e rurais",
+            "Urbanas (trânsito rápido, arterial, coletora, local) e Rurais (rodovias e estradas)",
+            "Somente por velocidade máxima"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Vias urbanas dividem-se em: trânsito rápido, arterial, coletora e local. Vias rurais são rodovias e estradas. Cada tipo tem regras de velocidade."
+        },
+        {
+          "id": 9,
+          "texto": "Quando não há placa de velocidade, qual é o limite em via urbana arterial?",
+          "alternativas": [
+            "40 km/h",
+            "60 km/h",
+            "80 km/h"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Na ausência de sinalização: Via local (30), Coletora (40), Arterial (60), Trânsito Rápido (80). Rodovias: 110 (pista dupla) ou 80 (pista simples)."
+        },
+        {
+          "id": 10,
+          "texto": "Em um cruzamento sem sinalização, quem tem preferência?",
+          "alternativas": [
+            "Sempre o veículo da direita",
+            "Quem chega primeiro ou, em caso de dúvida, veículo da direita",
+            "Veículo maior"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "A preferência é de quem chega primeiro. Se houver dúvida ou chegada simultânea, cede-se a preferência ao veículo que vem pela direita."
+        },
+        {
+          "id": 11,
+          "texto": "Em rotatórias (rótulas), quem tem preferência?",
+          "alternativas": [
+            "Quem está dentro da rotatória",
+            "Quem vai entrar",
+            "Sempre o maior veículo"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Veículos que já estão circulando na rotatória têm preferência sobre quem pretende entrar. Sinalizar ao sair é obrigatório."
+        },
+        {
+          "id": 12,
+          "texto": "Quando o condutor deve usar sinalização luminosa (setas)?",
+          "alternativas": [
+            "Apenas em conversões",
+            "Antes de conversões, mudanças de faixa, ultrapassagens e paradas",
+            "Só quando há fiscalização"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Sinalizar com antecedência é obrigatório em qualquer manobra: conversão, mudança de faixa, ultrapassagem, entrada/saída de vias e paradas."
+        },
+        {
+          "id": 13,
+          "texto": "É permitido ultrapassar pela direita?",
+          "alternativas": [
+            "Sim, em qualquer situação",
+            "Não, é sempre proibido",
+            "Sim, quando o veículo da frente sinalizar conversão à esquerda"
+          ],
           "respostaCorreta": 2,
-          "explicacao": "Para aumentar a segurança dos ciclistas, a atualização de 2026 do CTB estabelece a distância mínima de 2.0 metros para ultrapassagens."
+          "explicacao": "Ultrapassagem pela direita só é permitida quando o veículo à frente estiver sinalizando conversão à esquerda. Fora disso, é infração."
+        },
+        {
+          "id": 14,
+          "texto": "Quando é permitido usar buzina?",
+          "alternativas": [
+            "Para apressar veículos lentos",
+            "Para evitar acidentes iminentes fora de áreas urbanas",
+            "A qualquer momento"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Buzina só pode ser usada para evitar acidentes. Em áreas urbanas é proibida entre 22h e 6h, exceto em emergências."
+        },
+        {
+          "id": 15,
+          "texto": "Qual a diferença entre parada e estacionamento?",
+          "alternativas": [
+            "Parada é até 5 minutos; estacionamento é acima de 5 minutos",
+            "Parada é imobilização com condutor no veículo ou embarque/desembarque; estacionamento é por tempo indeterminado",
+            "Não há diferença"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Parada: motorista permanece ao volante ou para embarque/desembarque. Estacionamento: imobilização prolongada com veículo desocupado."
+        },
+        {
+          "id": 16,
+          "texto": "Onde é permitido embarcar e desembarcar passageiros?",
+          "alternativas": [
+            "Em qualquer local da pista",
+            "Junto à calçada (bordo da pista), sem obstruir trânsito",
+            "Apenas em pontos autorizados"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Embarque/desembarque deve ser feito junto ao meio-fio (calçada), preferencialmente em locais permitidos, sem obstruir tráfego."
+        },
+        {
+          "id": 17,
+          "texto": "Até que idade é obrigatório o uso de cadeirinha ou assento de elevação para crianças?",
+          "alternativas": [
+            "7 anos e meio ou 1,45m de altura, o que ocorrer primeiro",
+            "10 anos",
+            "12 anos"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Crianças até 7 anos e meio ou menos de 1,45m devem usar dispositivo de retenção (bebê-conforto, cadeirinha ou assento). Acima disso, cinto de segurança."
+        },
+        {
+          "id": 18,
+          "texto": "Quem é obrigado a usar cinto de segurança?",
+          "alternativas": [
+            "Apenas motorista",
+            "Motorista e passageiro do banco da frente",
+            "Todos os ocupantes do veículo"
+          ],
+          "respostaCorreta": 2,
+          "explicacao": "Cinto de segurança é obrigatório para TODOS os ocupantes, bancos dianteiros e traseiros. Motorista é responsável por menores de idade."
+        },
+        {
+          "id": 19,
+          "texto": "Quando é obrigatório acender o farol baixo durante o dia?",
+          "alternativas": [
+            "Nunca, só à noite",
+            "Em rodovias e túneis sempre; em vias urbanas se houver má visibilidade",
+            "Apenas em túneis"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Farol baixo é obrigatório em rodovias mesmo de dia, em túneis, e sempre que houver chuva, neblina ou baixa luminosidade."
+        },
+        {
+          "id": 20,
+          "texto": "Ciclistas devem circular:",
+          "alternativas": [
+            "No meio da pista",
+            "Sempre na calçada",
+            "No bordo direito da pista (acostamento ou ciclofaixa quando houver)"
+          ],
+          "respostaCorreta": 2,
+          "explicacao": "Ciclistas devem trafegar no bordo direito, ciclofaixas ou ciclovias. Calçadas são proibidas, exceto se sinalizadas para uso compartilhado."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "NÍVEL 2: SINALIZAÇÃO",
+      "descricao": "Identificação de placas e gestos",
+      "questoes": [
+        {
+          "id": 21,
+          "texto": "As placas de regulamentação (série R) têm qual formato e cor?",
+          "alternativas": [
+            "Quadradas, fundo azul com símbolo branco",
+            "Circulares, fundo branco com borda vermelha",
+            "Triangulares, fundo amarelo com borda preta"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Placas de regulamentação são CIRCULARES, fundo branco com borda vermelha (ou totalmente vermelhas). Impõem obrigações, restrições e proibições. Exemplo: R-1 (Parada Obrigatória)."
+        },
+        {
+          "id": 22,
+          "texto": "Placas de advertência têm qual característica visual?",
+          "alternativas": [
+            "Circulares vermelhas",
+            "Retangulares azuis",
+            "Quadradas com diagonal (formato losango), fundo amarelo com borda preta"
+          ],
+          "respostaCorreta": 2,
+          "explicacao": "Placas de advertência (série A) são amarelas em formato de losango. Alertam sobre condições potencialmente perigosas. Exemplo: A-2a (Curva acentuada à esquerda)."
+        },
+        {
+          "id": 23,
+          "texto": "Placas de indicação geralmente têm qual cor predominante?",
+          "alternativas": [
+            "Verde (rodovias), azul (serviços), branco (localidades), marrom (turismo)",
+            "Todas são vermelhas",
+            "Sempre amarelas"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Placas de indicação orientam o usuário. Verde = rodovias; Azul = serviços; Branco = identificação de vias urbanas; Marrom = atrativos turísticos."
+        },
+        {
+          "id": 24,
+          "texto": "Linhas amarelas no pavimento indicam:",
+          "alternativas": [
+            "Separação de fluxos de sentido contrário (proibido transpor)",
+            "Faixas de pedestres",
+            "Limite de velocidade"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Linhas amarelas separam fluxos opostos. Contínua (proibido cruzar), Dupla contínua (proibição absoluta). Linhas brancas separam fluxos do mesmo sentido."
+        },
+        {
+          "id": 25,
+          "texto": "Área hachurada (zebrado) no pavimento significa:",
+          "alternativas": [
+            "Estacionamento permitido",
+            "Área de canalização - proibido estacionar e circular",
+            "Faixa de pedestres"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Marcas de canalização (zebrado) delimitam áreas onde a circulação é proibida. Serve para organizar o tráfego em cruzamentos e desvios."
+        },
+        {
+          "id": 26,
+          "texto": "A inscrição 'PARE' no pavimento significa:",
+          "alternativas": [
+            "Sugestão de parar",
+            "Parada obrigatória antes da faixa de retenção",
+            "Estacionamento"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "'PARE' complementa placa R-1. Condutor DEVE parar antes da linha de retenção, verificar segurança e só então prosseguir."
+        },
+        {
+          "id": 27,
+          "texto": "Semáforo verde piscante indica:",
+          "alternativas": [
+            "Pode prosseguir normalmente",
+            "Atenção, vai fechar",
+            "Pare imediatamente"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Verde piscante = atenção, luz vai mudar para amarelo. Não acelere, prepare-se para parar se necessário. Em alguns locais, indica semáforo para pedestres."
+        },
+        {
+          "id": 28,
+          "texto": "Dois apitos breves do agente de trânsito significam:",
+          "alternativas": [
+            "Siga em frente",
+            "Pare",
+            "Motorista atenção"
+          ],
+          "respostaCorreta": 2,
+          "explicacao": "1 apito longo = PARE. 2 apitos breves = atenção, aguarde sinal. 3 apitos breves = siga/prossiga. Gestos do agente prevalecem sobre sinais luminosos."
+        },
+        {
+          "id": 29,
+          "texto": "Braço do condutor estendido para fora, horizontalmente, indica:",
+          "alternativas": [
+            "Conversão à esquerda ou mudança de faixa à esquerda",
+            "Conversão à direita",
+            "Redução de velocidade"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Braço horizontal = esquerda. Braço levantado (90°) = direita. Braço para baixo (45°) = redução de velocidade/freada."
+        },
+        {
+          "id": 30,
+          "texto": "Cones, cavaletes e fitas zebradas são:",
+          "alternativas": [
+            "Dispositivos de sinalização auxiliar temporária",
+            "Decoração",
+            "Placas oficiais"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "São dispositivos auxiliares, usados temporariamente em obras, eventos, acidentes para canalizar tráfego e alertar condutores."
+        },
+        {
+          "id": 31,
+          "texto": "Em áreas de obra, qual cor de placa é mais comum?",
+          "alternativas": [
+            "Amarela (advertência)",
+            "Vermelha (regulamentação)",
+            "Laranja (obras e desvios)"
+          ],
+          "respostaCorreta": 2,
+          "explicacao": "Placas LARANJA são específicas para obras, manutenção e situações temporárias. Alertam sobre desvios, estreitamento de pista, etc."
+        },
+        {
+          "id": 32,
+          "texto": "Placas marrons indicam:",
+          "alternativas": [
+            "Proibições",
+            "Atrativos turísticos e culturais",
+            "Perigos"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Placas MARROM (série S-500) indicam atrativos turísticos, monumentos, parques, museus e pontos de interesse cultural."
+        },
+        {
+          "id": 33,
+          "texto": "Rodovias federais são identificadas por:",
+          "alternativas": [
+            "BR + número",
+            "SP + número",
+            "Apenas o nome da cidade"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Rodovias federais levam sigla BR (Brasil) + número. Estaduais usam sigla do estado (ex: SP-330, MG-050). Placas verdes indicam direção."
+        },
+        {
+          "id": 34,
+          "texto": "Placa com fundo AZUL indica:",
+          "alternativas": [
+            "Proibição",
+            "Serviços auxiliares (posto, hospital, aeroporto)",
+            "Advertência"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Placas AZUIS (série S) indicam serviços: postos de gasolina, hospitais, telefones, restaurantes, aeroportos, pontos turísticos."
+        },
+        {
+          "id": 35,
+          "texto": "Faixas exclusivas para ônibus e táxis são sinalizadas com:",
+          "alternativas": [
+            "Linha amarela contínua",
+            "Palavra 'ÔNIBUS' ou 'TÁXI' no pavimento + placas de regulamentação",
+            "Não há sinalização específica"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Faixas exclusivas têm inscrição no pavimento ('ÔNIBUS', 'TÁXI') + placa R-40 (via exclusiva). Circulação de outros veículos é infração gravíssima."
+        },
+        {
+          "id": 36,
+          "texto": "A placa com Cruz de Santo André (X) indica:",
+          "alternativas": [
+            "Cruzamento comum",
+            "Cruzamento rodoferroviário (linha férrea)",
+            "Rotatória"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Cruz de Santo André (A-28) alerta sobre cruzamento com linha de trem. Parar SEMPRE antes dos trilhos, olhar para ambos os lados. Proibido parar sobre os trilhos."
+        },
+        {
+          "id": 37,
+          "texto": "Qual a diferença entre ciclofaixa e ciclovia?",
+          "alternativas": [
+            "Não há diferença",
+            "Ciclofaixa é na pista (demarcada); ciclovia é separada fisicamente da via",
+            "Ambas são na calçada"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "CICLOFAIXA: parte da pista delimitada para bicicletas (linha). CICLOVIA: via exclusiva, segregada fisicamente (meio-fio, grade). Motos proibidas em ambas."
+        },
+        {
+          "id": 38,
+          "texto": "Área de espera para motocicletas (bolsão) serve para:",
+          "alternativas": [
+            "Estacionamento",
+            "Posicionamento à frente dos carros no semáforo",
+            "Ultrapassagem"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Bolsão permite que motos se posicionem à frente no semáforo vermelho, aumentando segurança e fluidez. Carros NÃO podem invadir essa área."
+        },
+        {
+          "id": 39,
+          "texto": "Quando usar o triângulo de sinalização?",
+          "alternativas": [
+            "Apenas à noite",
+            "Sempre que o veículo estiver imobilizado na pista (acidente, pane)",
+            "Só em rodovias"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Triângulo é OBRIGATÓRIO em panes/acidentes. Colocar a pelo menos 30 metros atrás do veículo (rodovia) ou imediatamente atrás (via urbana). Pisca-alerta também deve ser acionado."
+        },
+        {
+          "id": 40,
+          "texto": "Veículos de emergência (ambulância, bombeiros, polícia) com sirene ligada têm:",
+          "alternativas": [
+            "Preferência apenas em rodovias",
+            "Prioridade absoluta - condutores devem facilitar a passagem",
+            "Mesma prioridade que outros veículos"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Veículos em atendimento de emergência (sirene/giroflex ligados) têm PRIORIDADE TOTAL. Condutores devem encostar à direita e parar se necessário. Não dar passagem é infração gravíssima."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nome": "NÍVEL 3: INFRAÇÕES E PENALIDADES",
+      "descricao": "Onde as pessoas mais erram",
+      "questoes": [
+        {
+          "id": 41,
+          "texto": "Qual a diferença entre infração e penalidade?",
+          "alternativas": [
+            "São sinônimos",
+            "Infração é a violação da lei; penalidade é a punição aplicada",
+            "Penalidade é mais grave que infração"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "INFRAÇÃO = ato de desrespeitar norma do CTB. PENALIDADE = consequência (multa, pontos, suspensão, etc). Exemplo: dirigir sem CNH (infração) → multa + apreensão (penalidades)."
+        },
+        {
+          "id": 42,
+          "texto": "Infração LEVE gera quantos pontos na CNH?",
+          "alternativas": [
+            "3 pontos",
+            "5 pontos",
+            "7 pontos"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Leve = 3 pontos + multa R$ 88,38. Exemplo: estacionar em desacordo com regulamentação (sem obstruir)."
+        },
+        {
+          "id": 43,
+          "texto": "Qual é um exemplo de infração MÉDIA?",
+          "alternativas": [
+            "Dirigir sem CNH",
+            "Estacionar em local proibido pela sinalização",
+            "Avançar sinal vermelho"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Média = 4 pontos + multa R$ 130,16. Exemplos: estacionar em local proibido, não usar cinto (condutor), dirigir sem documento."
+        },
+        {
+          "id": 44,
+          "texto": "Infração GRAVE gera:",
+          "alternativas": [
+            "3 pontos",
+            "5 pontos",
+            "7 pontos"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Grave = 5 pontos + multa R$ 195,23. Exemplos: excesso até 20%, ultrapassagem proibida, não usar cinto (passageiros)."
+        },
+        {
+          "id": 45,
+          "texto": "Qual destas é infração GRAVÍSSIMA?",
+          "alternativas": [
+            "Estacionar na calçada",
+            "Dirigir usando celular ao volante",
+            "Esquecer documentos em casa"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Gravíssima = 7 pontos + multa R$ 293,47. Exemplos: celular ao volante, avançar vermelho, excesso acima de 50%, dirigir sob efeito de álcool."
+        },
+        {
+          "id": 46,
+          "texto": "O que é fator multiplicador em infrações gravíssimas?",
+          "alternativas": [
+            "Dobra a pontuação",
+            "Multiplica o valor da multa conforme gravidade (x3, x5, x10)",
+            "Aumenta o prazo para pagamento"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Infrações gravíssimas específicas têm multa multiplicada: dirigir sem CNH (x3), disputar corrida (x10), embriaguez ao volante (x10)."
+        },
+        {
+          "id": 47,
+          "texto": "Dirigir sob influência de álcool (qualquer quantidade detectada) resulta em:",
+          "alternativas": [
+            "Apenas multa",
+            "Multa (x10), 7 pontos, suspensão da CNH por 12 meses e retenção do veículo",
+            "Advertência"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Lei Seca (Art. 165): infração gravíssima. Multa R$ 2.934,70, 7 pontos, suspensão CNH 12 meses, retenção do veículo. Além disso, é crime (Art. 306 CTB) se concentração ≥ 0,3 g/L ou sinais de embriaguez."
+        },
+        {
+          "id": 48,
+          "texto": "Recusar teste de bafômetro ou exame clínico gera:",
+          "alternativas": [
+            "Nada, é um direito",
+            "Mesmas penalidades de dirigir embriagado",
+            "Apenas advertência"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Recusa = INFRAÇÃO gravíssima equiparada à embriaguez. Mesmas penalidades: multa (x10), 7 pontos, suspensão 12 meses, retenção do veículo."
+        },
+        {
+          "id": 49,
+          "texto": "Excesso de velocidade entre 20% e 50% acima do limite gera:",
+          "alternativas": [
+            "Infração leve",
+            "Infração grave - 5 pontos",
+            "Infração gravíssima - 7 pontos"
+          ],
+          "respostaCorreta": 2,
+          "explicacao": "Até 20% = infração grave (5 pts). Entre 20% e 50% = infração gravíssima (7 pts). Acima de 50% = gravíssima (7 pts) + suspensão imediata."
+        },
+        {
+          "id": 50,
+          "texto": "Com quantos pontos ocorre a suspensão do direito de dirigir (CNH 2026)?",
+          "alternativas": [
+            "20 pontos em 12 meses",
+            "30 pontos (primeira CNH) ou 40 pontos (demais) em 12 meses",
+            "50 pontos"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Nova regra: 40 pontos em 12 meses (CNH definitiva) ou 30 pontos (primeira habilitação nos 12 meses iniciais). Antes era 20 pontos."
+        },
+        {
+          "id": 51,
+          "texto": "Cassação da CNH ocorre quando:",
+          "alternativas": [
+            "Condutor comete crime de trânsito com vítima fatal",
+            "Acumula muitos pontos",
+            "Esquece documentos"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "CASSAÇÃO: pena administrativa por crimes gravíssimos (homicídio culposo no trânsito, embriaguez com lesão grave). Proibido tirar CNH por 2 anos. Difere de suspensão (temporária)."
+        },
+        {
+          "id": 52,
+          "texto": "Quando é obrigatório fazer curso de reciclagem?",
+          "alternativas": [
+            "Após suspensão da CNH",
+            "Todo ano",
+            "Nunca"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Curso de reciclagem é obrigatório para restabelecer CNH após suspensão (por pontos ou infração específica). 30 horas/aula + exame."
+        },
+        {
+          "id": 53,
+          "texto": "Qual a diferença entre retenção e remoção do veículo?",
+          "alternativas": [
+            "São iguais",
+            "Retenção = veículo fica no local até regularização; Remoção = levado ao pátio",
+            "Retenção é mais grave"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "RETENÇÃO: veículo impedido de circular no local (ex: falta documento). REMOÇÃO: veículo rebocado ao depósito (ex: estacionamento irregular grave, embriaguez)."
+        },
+        {
+          "id": 54,
+          "texto": "Recolhimento de CNH/PPD ocorre quando:",
+          "alternativas": [
+            "Qualquer infração",
+            "Infração que gera suspensão (excesso >50%, embriaguez, etc.)",
+            "Apenas em acidentes"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "CNH/PPD é recolhida em infrações que geram suspensão imediata: excesso acima de 50%, embriaguez, corrida, etc. Devolução só após processo administrativo."
+        },
+        {
+          "id": 55,
+          "texto": "Transitar pelo acostamento gera:",
+          "alternativas": [
+            "Infração leve",
+            "Infração média - 4 pontos",
+            "Infração grave - 5 pontos"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Trafegar no acostamento = infração MÉDIA (4 pts, multa R$ 130,16). Acostamento é para emergências, não para 'furar fila'."
+        },
+        {
+          "id": 56,
+          "texto": "Usar celular ao volante é infração:",
+          "alternativas": [
+            "Leve",
+            "Média",
+            "Gravíssima - 7 pontos + multa (x3)"
+          ],
+          "respostaCorreta": 2,
+          "explicacao": "Segurar celular ao dirigir = gravíssima (7 pts, multa R$ 880,41 - fator x3). Inclui SMS, vídeos, fotos. Permitido viva-voz (suporte fixo)."
+        },
+        {
+          "id": 57,
+          "texto": "Estacionar em vaga de idoso ou PcD sem autorização gera:",
+          "alternativas": [
+            "Infração gravíssima - 5 pontos",
+            "Infração grave - 5 pontos",
+            "Infração gravíssima - 7 pontos (se vaga de PcD) / Grave - 5 pts (idoso)"
+          ],
+          "respostaCorreta": 2,
+          "explicacao": "Vaga PcD = gravíssima (7 pts). Vaga idoso = grave (5 pts). Ambas geram multa + remoção do veículo."
+        },
+        {
+          "id": 58,
+          "texto": "Avançar sinal vermelho do semáforo é:",
+          "alternativas": [
+            "Infração gravíssima - 7 pontos + multa",
+            "Infração média",
+            "Crime"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Avançar vermelho/amarelo = gravíssima (7 pts, multa R$ 293,47). Extremamente perigoso, causa acidentes graves."
+        },
+        {
+          "id": 59,
+          "texto": "Não dar preferência ao pedestre na faixa resulta em:",
+          "alternativas": [
+            "Infração leve",
+            "Infração gravíssima - 7 pontos",
+            "Apenas advertência"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Não dar preferência a pedestre em faixa ou conversão = infração GRAVÍSSIMA (7 pts, multa R$ 293,47). Pedestre TEM preferência SEMPRE."
+        },
+        {
+          "id": 60,
+          "texto": "Homicídio culposo no trânsito (Art. 302 CTB) é:",
+          "alternativas": [
+            "Apenas multa",
+            "Crime - detenção de 2 a 4 anos + suspensão/cassação da CNH",
+            "Infração gravíssima"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Matar alguém no trânsito por negligência/imprudência = CRIME. Pena: 2 a 4 anos (pode aumentar se embriaguez, fuga, etc). CNH suspensa/cassada. Além das consequências penais."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "nome": "NÍVEL 4: DIREÇÃO DEFENSIVA E MEIO AMBIENTE",
+      "descricao": "Como evitar acidentes e postura ética",
+      "questoes": [
+        {
+          "id": 61,
+          "texto": "Quais são os 5 elementos da Direção Defensiva?",
+          "alternativas": [
+            "Conhecimento, Atenção, Previsão, Decisão e Habilidade",
+            "Velocidade, Freio, Aceleração, Direção, Marcha",
+            "Apenas conhecimento e habilidade"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Direção Defensiva baseia-se em: 1) CONHECIMENTO (regras), 2) ATENÇÃO (foco total), 3) PREVISÃO (antecipar riscos), 4) DECISÃO (escolha rápida e correta), 5) HABILIDADE (executar manobras)."
+        },
+        {
+          "id": 62,
+          "texto": "Condições adversas de luz incluem:",
+          "alternativas": [
+            "Apenas noite",
+            "Ofuscamento, neblina, chuva intensa, pôr do sol",
+            "Só se estiver sem farol"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Luz adversa: ofuscamento (sol, farol alto de outro veículo), neblina, chuva forte, túneis, pôr/nascer do sol. Exige farol baixo, redução de velocidade e atenção redobrada."
+        },
+        {
+          "id": 63,
+          "texto": "Condições adversas de estrada incluem:",
+          "alternativas": [
+            "Apenas buracos",
+            "Pista molhada, óleo, curvas acentuadas, lombadas, trechos em obras",
+            "Só rodovias ruins"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Estrada adversa: pista escorregadia (óleo, água), irregularidades (buracos, lombadas), curvas, declives, estreitamentos, obras. Exige velocidade reduzida e atenção."
+        },
+        {
+          "id": 64,
+          "texto": "Condições adversas do condutor incluem:",
+          "alternativas": [
+            "Sono, fadiga, estresse, uso de medicamentos, álcool/drogas",
+            "Apenas embriaguez",
+            "Só se estiver doente"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Condutor adverso: sono, fadiga, estresse, medicamentos que causam sonolência, problemas emocionais, álcool/drogas. NUNCA dirija nessas condições."
+        },
+        {
+          "id": 65,
+          "texto": "O que fazer em caso de aquaplanagem?",
+          "alternativas": [
+            "Frear bruscamente e virar o volante",
+            "Tirar o pé do acelerador, segurar o volante firme, não frear nem virar bruscamente",
+            "Acelerar para sair da água"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "AQUAPLANAGEM: veículo 'flutua' na água. Solução: soltar acelerador suavemente, segurar volante firme (reto), NÃO frear nem virar. Esperar pneus recuperarem aderência. Prevenção: velocidade reduzida na chuva, pneus calibrados."
+        },
+        {
+          "id": 66,
+          "texto": "Qual a diferença entre distância de seguimento e distância de reação?",
+          "alternativas": [
+            "São iguais",
+            "Seguimento = espaço entre veículos; Reação = distância percorrida desde o estímulo até começar a frear",
+            "Reação é maior"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Distância de SEGUIMENTO: espaço mantido atrás do veículo da frente (regra: 2 segundos). Distância de REAÇÃO: percorrida no tempo entre ver perigo e acionar freio (~1s). Reação + frenagem = parada total."
+        },
+        {
+          "id": 67,
+          "texto": "Distância de parada total é:",
+          "alternativas": [
+            "Apenas frenagem",
+            "Reação + Frenagem",
+            "Só velocidade"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "PARADA TOTAL = Distância de REAÇÃO (tempo de resposta ~1s) + Distância de FRENAGEM (até parar). A 80 km/h: ~22m reação + ~40m frenagem = 62m. Varia com velocidade, pista, pneus, freios."
+        },
+        {
+          "id": 68,
+          "texto": "Principal causa de colisão frontal:",
+          "alternativas": [
+            "Pneu furado",
+            "Ultrapassagem imprudente, invasão de pista contrária, sono ao volante",
+            "Chuva"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Colisão frontal: ultrapassagem sem visibilidade, invasão de pista, sono (sair da via), curvas em alta velocidade. PREVENIR: não ultrapassar em locais proibidos, atenção em curvas, não dirigir cansado."
+        },
+        {
+          "id": 69,
+          "texto": "O que é ponto cego?",
+          "alternativas": [
+            "Área não visível pelos espelhos retrovisores",
+            "Farol queimado",
+            "Espelho sujo"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "PONTO CEGO: área lateral/traseira que espelhos não alcançam. Perigo ao trocar de faixa ou ultrapassar. PREVENÇÃO: olhar por cima do ombro (olhadinha rápida), regular espelhos corretamente, manter distância lateral."
+        },
+        {
+          "id": 70,
+          "texto": "Diferença entre direção preventiva e corretiva:",
+          "alternativas": [
+            "São iguais",
+            "Preventiva = evitar riscos antecipadamente; Corretiva = reagir a situações inesperadas",
+            "Corretiva é melhor"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Direção PREVENTIVA: agir antes (prever, planejar). Ex: reduzir velocidade antes da curva. Direção CORRETIVA: reagir ao imprevisto. Ex: frear ao ver criança na pista. Ideal: ser PREVENTIVO."
+        },
+        {
+          "id": 71,
+          "texto": "Ao pilotar motocicleta, é obrigatório usar:",
+          "alternativas": [
+            "Apenas capacete",
+            "Capacete com viseira/óculos, vestuário de proteção (jaqueta, calça, luvas, botas)",
+            "Só capacete e luvas"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Moto EXIGE: capacete certificado (selo Inmetro) com viseira/óculos, vestuário de proteção (mangas/pernas compridas), calçado fechado. Farol baixo aceso sempre. Passageiro também."
+        },
+        {
+          "id": 72,
+          "texto": "Como funciona frenagem de emergência com ABS?",
+          "alternativas": [
+            "Bombear o freio",
+            "Pisar firme e manter pisado - sistema evita travamento",
+            "Soltar e pisar várias vezes"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "ABS (Freio Antitravamento): ao frear forte, PISE FIRME e MANTENHA. Sistema 'bomba' automaticamente, evita derrapagem. Permite controle direcional. Sem ABS: 'bombear' o freio para não travar rodas."
+        },
+        {
+          "id": 73,
+          "texto": "O que é força centrífuga em curvas?",
+          "alternativas": [
+            "Força que puxa veículo para dentro",
+            "Força que empurra veículo para fora da curva - aumenta com velocidade",
+            "Força dos pneus"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Força CENTRÍFUGA: 'joga' veículo para fora da curva. Aumenta com velocidade e raio da curva. PREVENÇÃO: reduzir velocidade ANTES da curva, nunca frear dentro dela (desestabiliza)."
+        },
+        {
+          "id": 74,
+          "texto": "O que é PROCONVE?",
+          "alternativas": [
+            "Programa de controle de emissão veicular (gases poluentes)",
+            "Programa de construção de vias",
+            "Sigla de código de trânsito"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "PROCONVE: Programa de Controle da Poluição do Ar por Veículos Automotores (CONAMA). Define limites de emissão de gases. Obriga fabricantes a reduzir poluentes (CO, HC, NOx). Revisão periódica verifica emissões."
+        },
+        {
+          "id": 75,
+          "texto": "Jogar lixo pela janela do veículo:",
+          "alternativas": [
+            "É permitido em rodovias",
+            "É infração média + crime ambiental",
+            "Não tem penalidade"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Atirar objetos/lixo = infração MÉDIA (4 pts, multa). Além disso, Lei de Crimes Ambientais: multa ambiental. Lixo polui, entope bueiros (enchentes), prejudica fauna."
+        },
+        {
+          "id": 76,
+          "texto": "Manutenção preventiva reduz poluição porque:",
+          "alternativas": [
+            "Não reduz",
+            "Motor regulado, filtros limpos e pneus calibrados = combustão eficiente, menos emissão de gases",
+            "Só deixa carro bonito"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Manutenção (revisões, troca óleo/filtros, regulagem motor, calibragem pneus) = combustão completa, menos poluentes, economia combustível, segurança. Veículo mal conservado polui até 10x mais."
+        },
+        {
+          "id": 77,
+          "texto": "O que significa CATAR na Direção Defensiva?",
+          "alternativas": [
+            "Sigla sem significado",
+            "Cidadania, Alerta, Tato, Atenção, Responsabilidade",
+            "Código de advertência"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "CATAR: atitude ética no trânsito. CIDADANIA (respeitar leis/pessoas), ALERTA (atenção constante), TATO (gentileza), ATENÇÃO (foco), RESPONSABILIDADE (arcar com atos)."
+        },
+        {
+          "id": 78,
+          "texto": "Convívio social no trânsito significa:",
+          "alternativas": [
+            "Competir com outros veículos",
+            "Respeito mútuo, empatia, ceder passagem, evitar conflitos",
+            "Ignorar pedestres"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Trânsito compartilhado exige: respeito, paciência, ceder vez, sinalizar, não provocar, entender que todos têm pressa. Trânsito harmonioso = menos acidentes, estresse reduzido."
+        },
+        {
+          "id": 79,
+          "texto": "Ao chegar em local de acidente, o que fazer PRIMEIRO?",
+          "alternativas": [
+            "Filmar e postar nas redes",
+            "Sinalizar local (triângulo, pisca-alerta) para evitar novo acidente",
+            "Mexer nas vítimas"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "PRIORIDADES: 1) SINALIZAR (evitar novos acidentes), 2) Ligar 192 (SAMU) e 190 (polícia), 3) Avaliar vítimas SEM MOVIMENTAR, 4) Prestar primeiros socorros básicos (apenas se capacitado)."
+        },
+        {
+          "id": 80,
+          "texto": "O que NÃO fazer ao socorrer vítimas de acidente?",
+          "alternativas": [
+            "Ligar para emergência",
+            "Movimentar vítima (risco de lesão medular), dar água/comida, retirar capacete de motociclista",
+            "Sinalizar o local"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "NUNCA: movimentar vítima (exceto risco iminente - fogo/explosão), remover capacete, dar água/alimentos, medicar. FAZER: acalmar, cobrir (manta térmica), estancar sangramentos graves (com pano limpo), aguardar SAMU."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "nome": "NÍVEL 5: MECÂNICA BÁSICA E DETALHES TÉCNICOS",
+      "descricao": "Para quem quer gabaritar",
+      "questoes": [
+        {
+          "id": 81,
+          "texto": "Luz vermelha de óleo no painel indica:",
+          "alternativas": [
+            "Nível ou pressão de óleo baixa - PARE IMEDIATAMENTE",
+            "Tudo normal",
+            "Precisa trocar óleo em 1000 km"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Luz VERMELHA óleo = EMERGÊNCIA. Motor sem lubrificação adequada = travamento/fundição. PARE imediatamente, desligue motor, verifique nível. Se nível OK, problema na bomba (reboque necessário)."
+        },
+        {
+          "id": 82,
+          "texto": "Sistema de arrefecimento serve para:",
+          "alternativas": [
+            "Resfriar motor (evitar superaquecimento)",
+            "Aquecer motor",
+            "Apenas estética"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Arrefecimento: radiador + bomba d'água + ventoinha circulam líquido (água + aditivo) que absorve calor do motor. Temperatura ideal: 80-90°C. Superaquecimento = trinca cabeçote/junta. Verificar nível semanalmente."
+        },
+        {
+          "id": 83,
+          "texto": "Para que serve o óleo do motor?",
+          "alternativas": [
+            "Apenas limpar",
+            "Lubrificar peças móveis (reduz atrito/desgaste), refrigerar, limpar, selar",
+            "Fazer barulho"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Óleo lubrifica pistões/virabrequim (evita atrito metal-metal), resfria, limpa impurezas, veda anéis. Trocar conforme manual (5-10 mil km). Óleo velho/sujo = desgaste acelerado."
+        },
+        {
+          "id": 84,
+          "texto": "Luz de bateria acesa no painel indica:",
+          "alternativas": [
+            "Bateria descarregando ou alternador com defeito",
+            "Bateria nova",
+            "Só trocar daqui 6 meses"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Luz bateria = alternador não carrega bateria. Veículo funcionará até bateria esgotar (~30min). Causas: correia partida, alternador queimado, fusível. Procure oficina imediatamente."
+        },
+        {
+          "id": 85,
+          "texto": "Embreagem serve para:",
+          "alternativas": [
+            "Frear",
+            "Acoplar/desacoplar motor e câmbio (permitir trocas de marcha)",
+            "Acelerar"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Embreagem (carros manuais): disco que conecta motor ao câmbio. Pisar = desacopla (troca marcha). Soltar gradualmente = acopla (transmite força). Desgaste: trocar disco (~60-80 mil km)."
+        },
+        {
+          "id": 86,
+          "texto": "Diferença entre carro manual e automático na CNH 2026:",
+          "alternativas": [
+            "Nenhuma",
+            "CNH tirada em automático só permite dirigir automático (código 78)",
+            "Manual pode todos"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Exame em câmbio AUTOMÁTICO = CNH com restrição (código 78 - só automático). Para dirigir manual, precisa fazer exame em manual. CNH em manual permite ambos."
+        },
+        {
+          "id": 87,
+          "texto": "Sistema de freios utiliza:",
+          "alternativas": [
+            "Água",
+            "Fluido de freio (líquido hidráulico) que transmite pressão do pedal para pastilhas/lonas",
+            "Óleo de motor"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Ao pisar no freio, fluido pressuriza sistema → aciona pastilhas (disco) ou lonas (tambor) → atrito para veículo. Fluido higroscópico (absorve umidade) deve ser trocado a cada 2 anos. Nível baixo = freio esponjoso/falho."
+        },
+        {
+          "id": 88,
+          "texto": "Para que serve a suspensão e amortecedores?",
+          "alternativas": [
+            "Apenas conforto",
+            "Absorver impactos do solo, manter pneus em contato com pista, estabilidade",
+            "Decoração"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Suspensão (molas) + amortecedores absorvem irregularidades, mantêm estabilidade, aderência dos pneus. Amortecedores ruins = perda de controle em curvas, frenagem irregular. Trocar ~40-60 mil km."
+        },
+        {
+          "id": 89,
+          "texto": "O que é TWI nos pneus?",
+          "alternativas": [
+            "Marca do fabricante",
+            "Indicador de Desgaste (Tread Wear Indicator) - altura mínima 1,6mm",
+            "Tipo de borracha"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "TWI: pequena elevação nas ranhuras. Quando banda de rodagem iguala ao TWI = 1,6mm (mínimo legal). Pneu desgastado = aquaplanagem, perda aderência. Calibragem correta aumenta vida útil."
+        },
+        {
+          "id": 90,
+          "texto": "Diferença entre injeção eletrônica e carburador:",
+          "alternativas": [
+            "São iguais",
+            "Injeção eletrônica dosa combustível eletronicamente (preciso, econômico); Carburador é mecânico",
+            "Carburador é melhor"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "INJEÇÃO: bicos injetam combustível controlados por computador (ECU), sensores ajustam mistura ar/combustível = economia, menos poluição. CARBURADOR: mecânico (desuso), menos eficiente. Carros modernos só usam injeção."
+        },
+        {
+          "id": 91,
+          "texto": "Sistema de exaustão/escapamento serve para:",
+          "alternativas": [
+            "Fazer barulho",
+            "Expelir gases queimados, reduzir ruído, diminuir poluentes (catalisador)",
+            "Apenas estética"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Escapamento: expele gases do motor. CATALISADOR: converte gases tóxicos (CO, NOx) em menos nocivos (CO2, N2). Silencioso reduz ruído. Escapamento furado = barulho excessivo (infração), mais poluição."
+        },
+        {
+          "id": 92,
+          "texto": "Diferença entre direção hidráulica e elétrica:",
+          "alternativas": [
+            "Nenhuma",
+            "Hidráulica usa fluido/bomba (motor); Elétrica usa motor elétrico (mais eficiente, sem manutenção)",
+            "Hidráulica é melhor"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Direção HIDRÁULICA: bomba movida por correia + fluido = assistência. Requer manutenção (fluido). Direção ELÉTRICA: motor elétrico dá assistência, sem fluido, mais econômica. Moderna usa elétrica."
+        },
+        {
+          "id": 93,
+          "texto": "Em motos, a transmissão (coroa, corrente, pinhão) deve ser:",
+          "alternativas": [
+            "Lubrificada e ajustada regularmente (~500-1000 km)",
+            "Nunca mexer",
+            "Trocar só quando quebrar"
+          ],
+          "respostaCorreta": 0,
+          "explicacao": "Corrente de moto transmite potência. Exige: lubrificação (graxa/spray específico) e ajuste de folga (2-3 dedos) regularmente. Corrente suja/frouxa = desgaste prematuro de coroa/pinhão, perda de potência."
+        },
+        {
+          "id": 94,
+          "texto": "Quais fluidos devem ser verificados periodicamente?",
+          "alternativas": [
+            "Apenas óleo motor",
+            "Óleo motor, fluido freio, líquido arrefecimento, fluido direção (hidráulica), água limpador",
+            "Nenhum"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Verificar mensalmente: óleo motor (vareta), fluido freio (reservatório), líquido radiador (FRIO), fluido direção hidráulica, água limpador. Filtros (ar, óleo, combustível) conforme manual."
+        },
+        {
+          "id": 95,
+          "texto": "Como funciona motor 4 tempos?",
+          "alternativas": [
+            "Não importa",
+            "Admissão (ar+combustível entra) → Compressão → Explosão (vela acende) → Escape (gases saem)",
+            "Apenas explosão"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "4 tempos: 1) ADMISSÃO: válvula abre, pistão desce, mistura ar/combustível entra. 2) COMPRESSÃO: válvulas fecham, pistão sobe, comprime mistura. 3) EXPLOSÃO: vela acende, explosão empurra pistão (força motriz). 4) ESCAPE: válvula abre, pistão sobe, expele gases. Ciclo repete."
+        },
+        {
+          "id": 96,
+          "texto": "Equipamentos obrigatórios no veículo:",
+          "alternativas": [
+            "Nenhum",
+            "Extintor (carro), macaco, chave roda, triângulo, pneu reserva/kit reparo",
+            "Apenas triângulo"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "OBRIGATÓRIOS: extintor ABC (carros até 2015; motos não), macaco, chave roda, triângulo, pneu reserva OU kit reparo. Falta = infração LEVE (3 pts). Verificar validade extintor/calibragem estepe."
+        },
+        {
+          "id": 97,
+          "texto": "Ergonomia ao dirigir significa:",
+          "alternativas": [
+            "Qualquer posição",
+            "Ajustar banco (pés alcançam pedais totalmente, joelhos levemente flexionados), encosto reto (ombros tocam), espelhos corretos",
+            "Banco reclinado"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Posição correta: banco próximo (pés acionam pedais fundo, joelhos semiflexos), encosto 90-110° (ombros apoiados), volante alcançável (pulsos no topo), espelhos ajustados (reduz ponto cego). Previne fadiga/lesões."
+        },
+        {
+          "id": 98,
+          "texto": "Freio motor em descidas:",
+          "alternativas": [
+            "Não usar",
+            "Engatar marcha reduzida (2ª/3ª) - motor desacelera veículo sem sobrecarregar freios",
+            "Acelerar fundo"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Descidas longas: usar freio MOTOR (marcha baixa). Evita superaquecimento dos freios (fading - perda eficiência). NUNCA desça em neutro ou desligado (sem freio motor = perda controle). Alternar leve freio pedal + motor."
+        },
+        {
+          "id": 99,
+          "texto": "Tecnologias ADAS (Assistência ao Condutor) incluem:",
+          "alternativas": [
+            "Nada",
+            "Frenagem automática emergência, alerta ponto cego, controle cruzeiro adaptativo, assistente permanência faixa",
+            "Apenas rádio"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "ADAS (Advanced Driver Assistance Systems): tecnologias que auxiliam condução. Exemplos: frenagem automática (detecta colisão), alerta ponto cego, lane keeping (mantém faixa), ACC (velocidade constante). Futuro: legislação pode exigir em veículos novos."
+        },
+        {
+          "id": 100,
+          "texto": "Qual a atitude MAIS segura e legal em trânsito?",
+          "alternativas": [
+            "Dirigir rápido para não atrasar",
+            "Respeitar regras, manter atenção, prever riscos, ser gentil, conservar veículo, nunca dirigir cansado/embriagado",
+            "Confiar só na sorte"
+          ],
+          "respostaCorreta": 1,
+          "explicacao": "Trânsito seguro = soma de: conhecimento CTB, direção defensiva (prever/evitar), respeito (leis/pessoas), manutenção preventiva, condições físicas/mentais adequadas, empatia. CADA CONDUTOR é responsável pela segurança de todos. Trânsito mais gentil = menos acidentes, menos mortes."
         }
       ]
     }

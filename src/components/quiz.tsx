@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState, useEffect, useCallback } from 'react';
 import { Award, CheckCircle, XCircle, RotateCw, Share2 } from 'lucide-react';
@@ -10,12 +10,21 @@ import { Questao, QuizData } from '@/lib/types';
 
 const quizData: QuizData = quizDataJson;
 
+// Algoritmo de Fisher-Yates para embaralhar um array
+const shuffle = (array: any[]) => {
+  let currentIndex = array.length, randomIndex;
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+  return array;
+};
+
 const tocarSom = (som: 'acerto' | 'erro' | 'finalizar') => {
   if (typeof window !== 'undefined') {
     const audio = new Audio(`/sounds/${som}.mp3`);
-    audio.play().catch(error => {
-      console.error(`Erro ao tocar o som ${som}:`, error);
-    });
+    audio.play().catch(error => console.error(`Erro ao tocar o som ${som}:`, error));
   }
 };
 
@@ -26,15 +35,20 @@ export default function Quiz() {
   const [respostaSelecionada, setRespostaSelecionada] = useState<number | null>(null);
   const [mostrarExplicacao, setMostrarExplicacao] = useState(false);
   const [quizFinalizado, setQuizFinalizado] = useState(false);
-  const [showGlow, setShowGlow] = useState(false); // Estado para a animação de brilho
+  const [showGlow, setShowGlow] = useState(false);
 
   const gerarSimulado = useCallback(() => {
     const todasQuestoes = quizData.niveis.flatMap(nivel => nivel.questoes);
-    const simuladoQuestoes: Questao[] = [];
+    let simuladoQuestoes: Questao[] = [];
+    
     if (todasQuestoes.length > 0) {
-      for (let i = 0; i < 100; i++) {
-        const randomIndex = Math.floor(Math.random() * todasQuestoes.length);
-        simuladoQuestoes.push(todasQuestoes[randomIndex]);
+      let poolAtual = shuffle([...todasQuestoes]);
+
+      while (simuladoQuestoes.length < 100) {
+        if (poolAtual.length === 0) {
+          poolAtual = shuffle([...todasQuestoes]);
+        }
+        simuladoQuestoes.push(poolAtual.pop()!);
       }
     }
     setQuestoes(simuladoQuestoes);
@@ -46,23 +60,21 @@ export default function Quiz() {
 
   const handleResposta = (index: number) => {
     if (respostaSelecionada !== null) return;
-
     setRespostaSelecionada(index);
     const questaoCorreta = questoes[indiceQuestaoAtual].respostaCorreta;
 
     if (index === questaoCorreta) {
       setPontuacao(p => p + 1);
       tocarSom('acerto');
-      setShowGlow(true); // Ativa o brilho
+      setShowGlow(true);
     } else {
       tocarSom('erro');
     }
-
     setMostrarExplicacao(true);
   };
 
   const proximaQuestao = useCallback(() => {
-    setShowGlow(false); // Desativa o brilho para a próxima questão
+    setShowGlow(false);
     setMostrarExplicacao(false);
     setRespostaSelecionada(null);
 
@@ -75,7 +87,7 @@ export default function Quiz() {
   }, [indiceQuestaoAtual, questoes.length]);
 
   const reiniciarQuiz = () => {
-    gerarSimulado(); // Gera um novo simulado de 100 questões aleatórias
+    gerarSimulado();
     setShowGlow(false);
     setIndiceQuestaoAtual(0);
     setPontuacao(0);
@@ -85,11 +97,11 @@ export default function Quiz() {
   };
 
   const shareResult = async () => {
-    const shareText = `Estou estudando para a Nova CNH 2026 e acertei ${pontuacao} questões! 🚗💨`;
+    const shareText = `Estou estudando para a Nova CNH 2026 e acertei ${pontuacao} de 100 questões! 🚗💨`;
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Meu Resultado no Simulado CNH 2026',
+          title: 'Simulado CNH 2026',
           text: shareText,
           url: window.location.href
         });
@@ -97,12 +109,10 @@ export default function Quiz() {
         console.error('Erro ao compartilhar:', error);
       }
     } else {
-      // Fallback para desktop ou navegadores sem suporte
       navigator.clipboard.writeText(shareText);
-      alert('Resultado copiado para a área de transferência! Cole no seu app de mensagens para compartilhar.');
+      alert('Resultado copiado!');
     }
   };
-
 
   if (questoes.length === 0) {
     return <div className="text-center p-8 text-white">Carregando simulado...</div>;
@@ -113,20 +123,16 @@ export default function Quiz() {
 
   if (quizFinalizado) {
     return (
-      <Card className="w-full max-w-2xl mx-auto p-8 text-center bg-card text-card-foreground">
+      <Card className="w-full max-w-2xl mx-auto p-8 text-center bg-card text-card-foreground border-brand-secondary">
         <CardTitle className="text-3xl font-bold mb-4 text-brand-secondary">Simulado Finalizado!</CardTitle>
         <CardContent className="flex flex-col gap-4">
           <p className="text-xl">Sua pontuação final foi:</p>
-          <div className="text-6xl font-bold text-primary">
-            {pontuacao} / 100
-          </div>
+          <div className="text-6xl font-bold text-primary">{pontuacao} / 100</div>
           <Button onClick={reiniciarQuiz} size="lg" className="bg-brand-secondary text-brand-primary hover:bg-brand-secondary/90">
-            <RotateCw className="mr-2 h-5 w-5" />
-            Refazer Simulado
+            <RotateCw className="mr-2 h-5 w-5" /> Refazer Simulado
           </Button>
-          <Button onClick={shareResult} size="lg" variant="outline" className="bg-green-500 text-white hover:bg-green-600 border-green-500">
-            <Share2 className="mr-2 h-5 w-5" />
-            Compartilhar no WhatsApp
+          <Button onClick={shareResult} size="lg" className="bg-green-600 text-white hover:bg-green-700">
+            <Share2 className="mr-2 h-5 w-5" /> Compartilhar no WhatsApp
           </Button>
         </CardContent>
       </Card>
@@ -143,8 +149,8 @@ export default function Quiz() {
         </div>
       </header>
 
-      <Card className={`overflow-hidden bg-card text-card-foreground border-border transition-shadow duration-500 ${showGlow ? 'correct-answer-glow' : ''}`}>
-        <Progress value={progresso} className="h-2 bg-brand-secondary" />
+      <Card className={`overflow-hidden bg-card text-card-foreground border-border transition-shadow duration-500 ${showGlow ? 'ring-4 ring-yellow-400' : ''}`}>
+        <Progress value={progresso} className="h-2 bg-gray-700" />
         <CardHeader>
           <CardTitle className="text-xl md:text-2xl leading-tight text-white">
             ({indiceQuestaoAtual + 1}/100) {questaoAtual.texto}
@@ -155,35 +161,36 @@ export default function Quiz() {
             const isSelected = respostaSelecionada === index;
             const isCorrect = questaoAtual.respostaCorreta === index;
             
-            let buttonClass = 'bg-gray-200 text-gray-800 hover:bg-gray-300';
+            let buttonClass = 'bg-gray-100 text-gray-900 hover:bg-gray-200';
             if (isSelected) {
               buttonClass = isCorrect ? 'bg-yellow-400 text-black' : 'bg-red-600 text-white';
             } else if (respostaSelecionada !== null && isCorrect) {
-                buttonClass = 'bg-yellow-400 text-black';
+              buttonClass = 'bg-yellow-400 text-black';
             }
             
             return (
-            <Button
-              key={index}
-              className={`h-auto justify-start text-left py-3 px-4 transition-all duration-300 ${buttonClass}`}
-              onClick={() => handleResposta(index)}
-              disabled={respostaSelecionada !== null}
-            >
-              <div className="flex items-center gap-4">
-                 <span className="font-bold">{String.fromCharCode(65 + index)}</span>
-                 <span className="flex-1 whitespace-normal">{alternativa}</span>
-                 {isSelected && (isCorrect ? <CheckCircle /> : <XCircle />)}
-              </div>
-            </Button>
-          )} )}
+              <Button
+                key={index}
+                className={`h-auto justify-start text-left py-4 px-6 text-lg transition-all duration-300 ${buttonClass}`}
+                onClick={() => handleResposta(index)}
+                disabled={respostaSelecionada !== null}
+              >
+                <div className="flex items-center gap-4 w-full">
+                   <span className="font-bold">{String.fromCharCode(65 + index)}</span>
+                   <span className="flex-1 whitespace-normal">{alternativa}</span>
+                   {isSelected && (isCorrect ? <CheckCircle /> : <XCircle />)}
+                </div>
+              </Button>
+            );
+          })}
         </CardContent>
       </Card>
 
       {mostrarExplicacao && (
-        <Card className="mt-4 p-4 bg-gray-800 text-white border-t-4 border-brand-secondary">
-            <h3 className="font-bold text-lg mb-2">Explicação:</h3>
-            <p>{questaoAtual.explicacao}</p>
-            <Button onClick={proximaQuestao} className="mt-4 w-full bg-brand-secondary text-brand-primary hover:bg-brand-secondary/90" size="lg">
+        <Card className="mt-4 p-6 bg-gray-900 text-white border-t-4 border-brand-secondary">
+            <h3 className="font-bold text-xl mb-2 text-brand-secondary">Explicação:</h3>
+            <p className="text-lg">{questaoAtual.explicacao}</p>
+            <Button onClick={proximaQuestao} className="mt-6 w-full bg-brand-secondary text-brand-primary font-bold hover:bg-brand-secondary/90" size="lg">
               Próxima Questão
             </Button>
         </Card>
