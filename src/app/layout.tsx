@@ -1,10 +1,23 @@
-import type {Metadata} from 'next';
-import './globals.css';
-import { Toaster } from "@/components/ui/toaster"
+import type { Metadata, Viewport } from 'next';
+import '../styles/globals.css';
+import { Toaster } from "@/components/ui/toaster";
 
+// Metadados centralizados para PWA e SEO
 export const metadata: Metadata = {
-  title: 'RESET',
-  description: 'Um quiz para fortalecer a mente contra o bullying.',
+  title: 'Nova CNH 2026',
+  description: 'Teste atualizado para aprender e treinar com regras de 2026.',
+  manifest: '/manifest.json',
+  icons: {
+    // Ícone padrão para navegadores e favicon.ico fallback
+    icon: '/icon-192x192.png',
+    // Ícone para dispositivos Apple (tela inicial)
+    apple: '/icon-192x192.png',
+  },
+};
+
+// Configuração da Viewport e Tema
+export const viewport: Viewport = {
+  themeColor: '#00153B', // Cor da barra de status (Azul Royal)
 };
 
 export default function RootLayout({
@@ -16,14 +29,10 @@ export default function RootLayout({
     <html lang="pt-BR">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Russo+One&display=swap" rel="stylesheet" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#0a0a0a" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased">
+      <body className="font-sans antialiased">
         {children}
         <Toaster />
       </body>

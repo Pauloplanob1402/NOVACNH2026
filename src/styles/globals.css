@@ -9,7 +9,7 @@
     --brand-secondary: 250 204 21;  /* Amarelo Trânsito: #FACC15 */
 
     /* Cores de Fundo */
-    --background: 127 66% 49%; /* Verde do Logo: #2AD13D */
+    --background: 10 10 10; /* Fundo escuro */
     --foreground: 248 250 252; /* Texto principal (branco) */
 
     /* Cores Semânticas */
@@ -48,7 +48,6 @@
   }
   body {
     @apply bg-background text-foreground;
-    background: radial-gradient(ellipse at center, hsl(127 66% 52%), hsl(127 66% 40%));
   }
 }
 

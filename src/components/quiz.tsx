@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
@@ -29,10 +28,21 @@ export default function Quiz() {
   const [quizFinalizado, setQuizFinalizado] = useState(false);
   const [showGlow, setShowGlow] = useState(false); // Estado para a animação de brilho
 
-  useEffect(() => {
+  const gerarSimulado = useCallback(() => {
     const todasQuestoes = quizData.niveis.flatMap(nivel => nivel.questoes);
-    setQuestoes(todasQuestoes);
+    const simuladoQuestoes: Questao[] = [];
+    if (todasQuestoes.length > 0) {
+      for (let i = 0; i < 100; i++) {
+        const randomIndex = Math.floor(Math.random() * todasQuestoes.length);
+        simuladoQuestoes.push(todasQuestoes[randomIndex]);
+      }
+    }
+    setQuestoes(simuladoQuestoes);
   }, []);
+
+  useEffect(() => {
+    gerarSimulado();
+  }, [gerarSimulado]);
 
   const handleResposta = (index: number) => {
     if (respostaSelecionada !== null) return;
@@ -65,6 +75,7 @@ export default function Quiz() {
   }, [indiceQuestaoAtual, questoes.length]);
 
   const reiniciarQuiz = () => {
+    gerarSimulado(); // Gera um novo simulado de 100 questões aleatórias
     setShowGlow(false);
     setIndiceQuestaoAtual(0);
     setPontuacao(0);
